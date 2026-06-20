@@ -1,6 +1,9 @@
 import type { Config } from 'tailwindcss';
 import plugin from 'tailwindcss/plugin';
-import { clubBrand, clubFonts, darkTheme } from './tokens';
+import { clubBrand, clubFonts, lightTheme, darkTheme, type SemanticTheme } from './tokens';
+
+const toCssVars = (theme: SemanticTheme): Record<string, string> =>
+  Object.fromEntries(Object.entries(theme).map(([k, v]) => [`--${k}`, v]));
 
 /**
  * Tailwind preset = the shared theme. A consuming app does:
@@ -9,9 +12,14 @@ import { clubBrand, clubFonts, darkTheme } from './tokens';
  *   export default { presets: [uebBrandPreset], content: [...], ... };
  *
  * It provides the semantic colours (hsl(var(--token))), the `club.*` brand
- * utilities, fonts, radius, brand glows, AND emits the `:root` CSS variables
- * from `darkTheme` via an addBase plugin — so the variables and the Tailwind
- * colours can never drift apart.
+ * utilities, fonts, the radius scale, brand glows, AND emits the CSS variables
+ * via an addBase plugin — `:root` = light theme, `.dark` = dark theme — so the
+ * variables and the Tailwind colours can never drift apart.
+ *
+ * Consumers must set `--radius` in their own `:root` (app-level layout choice),
+ * load the fonts (Kanit + DM Sans + DM Mono), and choose their mode: a
+ * light-default app does nothing; a dark-only app (evolution) sets
+ * `<html class="dark">`.
  */
 const uebBrandPreset: Partial<Config> = {
   theme: {
@@ -64,9 +72,8 @@ const uebBrandPreset: Partial<Config> = {
   plugins: [
     plugin(({ addBase }) => {
       addBase({
-        ':root': Object.fromEntries(
-          Object.entries(darkTheme).map(([k, v]) => [`--${k}`, v]),
-        ) as Record<string, string>,
+        ':root': toCssVars(lightTheme),
+        '.dark': toCssVars(darkTheme),
       });
     }),
   ],

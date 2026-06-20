@@ -7,11 +7,11 @@ var clubBrand = {
   lion: "#CBA165",
   // gold — crest border / stars / excellence
   ultraViolet: "#5b5574",
-  // muted purple — secondary (not in crest; documented)
+  // muted purple — secondary
   babyPowder: "#fcfaf6",
-  // near-white (light-theme surface, used by other repos)
+  // near-white / warm light surface
   alabaster: "#f2ede5"
-  // warm off-white (light-theme surface)
+  // warm off-white — light section surface
 };
 var clubFonts = {
   display: "Kanit",
@@ -53,12 +53,49 @@ var darkTheme = {
   "sidebar-accent": "232 20% 18%",
   "sidebar-accent-foreground": "210 33% 92%",
   "sidebar-border": "232 18% 24%",
-  "sidebar-ring": "205 58% 72%",
-  radius: "0.75rem"
+  "sidebar-ring": "205 58% 72%"
+};
+var lightTheme = {
+  background: "40 38% 98%",
+  // babyPowder
+  foreground: "232 30% 18%",
+  card: "0 0% 100%",
+  "card-foreground": "232 30% 18%",
+  popover: "0 0% 100%",
+  "popover-foreground": "232 30% 18%",
+  primary: "232 43% 39%",
+  // marianBlue
+  "primary-foreground": "40 38% 98%",
+  secondary: "38 30% 92%",
+  // alabaster
+  "secondary-foreground": "232 30% 22%",
+  muted: "38 28% 93%",
+  "muted-foreground": "250 10% 42%",
+  // ultraViolet-ish, readable on light
+  accent: "205 65% 48%",
+  // deeper azure — pops on light surfaces
+  "accent-foreground": "0 0% 100%",
+  destructive: "0 72% 48%",
+  "destructive-foreground": "0 0% 100%",
+  border: "38 22% 86%",
+  input: "38 22% 86%",
+  ring: "205 65% 48%",
+  "stat-highlight": "35 55% 40%",
+  // lion gold, darkened for contrast on light
+  gold: "35 55% 40%",
+  "sidebar-background": "38 33% 96%",
+  "sidebar-foreground": "232 30% 18%",
+  "sidebar-primary": "232 43% 39%",
+  "sidebar-primary-foreground": "40 38% 98%",
+  "sidebar-accent": "38 30% 92%",
+  "sidebar-accent-foreground": "232 30% 22%",
+  "sidebar-border": "38 22% 86%",
+  "sidebar-ring": "205 65% 48%"
 };
 
 export {
   clubBrand,
   clubFonts,
-  darkTheme
+  darkTheme,
+  lightTheme
 };

@@ -1,11 +1,13 @@
 import {
   clubBrand,
   clubFonts,
-  darkTheme
-} from "./chunk-DF6HM2RN.js";
+  darkTheme,
+  lightTheme
+} from "./chunk-2NSPXCU6.js";
 
 // src/tailwind-preset.ts
 import plugin from "tailwindcss/plugin";
+var toCssVars = (theme) => Object.fromEntries(Object.entries(theme).map(([k, v]) => [`--${k}`, v]));
 var uebBrandPreset = {
   theme: {
     extend: {
@@ -57,9 +59,8 @@ var uebBrandPreset = {
   plugins: [
     plugin(({ addBase }) => {
       addBase({
-        ":root": Object.fromEntries(
-          Object.entries(darkTheme).map(([k, v]) => [`--${k}`, v])
-        )
+        ":root": toCssVars(lightTheme),
+        ".dark": toCssVars(darkTheme)
       });
     })
   ]

@@ -15,7 +15,7 @@ ready-to-consume adapters, so a re-skin is one edit + a version bump.
 ## Install (consumers)
 
 ```bash
-npm install github:mfavier/ueb-brand#v0.1.0
+npm install github:mfavier/ueb-brand#v0.2.0
 ```
 
 `dist/` is committed, so consumers don't build the package.
@@ -28,11 +28,20 @@ npm install github:mfavier/ueb-brand#v0.1.0
 import uebBrandPreset from '@ueb/brand/tailwind-preset';
 
 export default {
-  presets: [uebBrandPreset], // semantic colours, club.*, fonts, radius, glows, :root vars
+  presets: [uebBrandPreset], // semantic colours, club.*, fonts, radius scale, glows, :root+.dark vars
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
 };
 ```
+
+Then, per app:
+
+- **Set `--radius`** in your own `:root` (the preset only provides the lg/md/sm scale):
+  ```css
+  :root { --radius: 0.75rem; } /* evolution; the others use 0.5rem */
+  ```
+- **Choose the mode**: the preset emits `:root` = light, `.dark` = dark. A light-default
+  app does nothing; a **dark-only** app sets `<html class="dark">`.
 
 Load the fonts in `index.html` (Kanit + DM Sans + DM Mono):
 
@@ -70,6 +79,27 @@ import { clubBrand, clubFonts, darkTheme } from '@ueb/brand';
 2. Replace `src/logos/uccle-europe.svg`.
 3. `npm run build`, commit `dist/`, tag a new version.
 4. Bump the dependency in each app and redeploy.
+
+## Versioning & compatibility
+
+The package is **SemVer**, consumed via tagged git dependency (`#vX.Y.Z`). Apps pin a tag and
+bump deliberately — no silent drift. The **public contract** is: the set of token *names*
+(`--primary`, `--accent`, `club.*`, the `gold`/`stat-highlight` roles…), the preset entry points,
+and the `ClubLogo` props. That contract — not the hex values — is what SemVer protects.
+
+| Change | Bump |
+|---|---|
+| Re-skin (change hex / theme values), add a token or theme, additive preset keys | **minor** |
+| Bug fix, doc, crest asset swap (same name) | **patch** |
+| Rename/remove a token role, change a token's meaning, change an export shape | **major** |
+
+**Product mindset (to keep in view as this grows):** apps will run *mixed* versions of `@ueb/brand`
+(one repo on `0.2.x`, another still on `0.1.x`). Because the contract is token *names*, a minor
+re-skin propagates safely as each app bumps on its own cadence; only a **major** forces a coordinated
+update across consumers. Track who's on what in the consumer matrix in `VERSIONS.md`, and treat a
+major as a planned, ecosystem-wide release (all apps bumped + redeployed + smoke-tested together).
+When this becomes multi-club, the per-club brand values become inputs (a config), kept separate from
+this contract so version compatibility stays about the *shape*, not the *colours*.
 
 ## Roadmap
 

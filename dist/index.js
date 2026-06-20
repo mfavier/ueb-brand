@@ -1,10 +1,12 @@
 import {
   clubBrand,
   clubFonts,
-  darkTheme
-} from "./chunk-DF6HM2RN.js";
+  darkTheme,
+  lightTheme
+} from "./chunk-2NSPXCU6.js";
 export {
   clubBrand,
   clubFonts,
-  darkTheme
+  darkTheme,
+  lightTheme
 };
