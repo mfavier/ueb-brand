@@ -15,7 +15,7 @@ ready-to-consume adapters, so a re-skin is one edit + a version bump.
 ## Install (consumers)
 
 ```bash
-npm install github:mfavier/ueb-brand#v0.2.0
+npm install github:mfavier/ueb-brand#v0.3.0
 ```
 
 `dist/` is committed, so consumers don't build the package.
@@ -28,7 +28,7 @@ npm install github:mfavier/ueb-brand#v0.2.0
 import uebBrandPreset from '@ueb/brand/tailwind-preset';
 
 export default {
-  presets: [uebBrandPreset], // semantic colours, club.*, fonts, radius scale, glows, :root+.dark vars
+  presets: [uebBrandPreset], // colours, club.*, fonts, radius, glows, keyframes, :root+.dark vars, base resets
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
 };
@@ -69,7 +69,7 @@ import { clubBrand, clubFonts, darkTheme } from '@ueb/brand';
 | Import | Contents |
 |---|---|
 | `@ueb/brand` | `clubBrand`, `clubFonts`, `darkTheme` (framework-agnostic) |
-| `@ueb/brand/tailwind-preset` | Tailwind v3 preset (theme + `:root` addBase plugin) |
+| `@ueb/brand/tailwind-preset` | Tailwind v3 preset (theme, keyframes, `:root`/`.dark` vars + base resets via addBase) |
 | `@ueb/brand/react` | `ClubLogo`, `clubLogoSvg` |
 | `@ueb/brand/logo.svg` | the raw vector crest |
 

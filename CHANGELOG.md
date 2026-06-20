@@ -5,6 +5,16 @@ All notable changes to the brand package. The package follows **SemVer**; see th
 
 Most recent first.
 
+## v0.3.0 — 2026-06-20
+
+**Base layer (design-system foundation).**
+
+- The Tailwind preset now ships **common keyframes/animations** (`fade-in`, `fade-up`, `slide-in-right`, `slide-in-left`, `pulse-subtle`, `accordion-down`, `accordion-up`) via `theme.extend`.
+- The preset's `addBase` now also emits shared **base CSS resets**: stable scrollbar gutter on `<html>` (kills page-to-page layout shift), `prefers-reduced-motion` neutralization, a `:focus-visible` ring (using `--ring`), and the thin brand scrollbar (webkit).
+- Purely additive — the token-name contract is unchanged, no new entry points. This is Tier 1 of the design-system layering (see `ueb-documentation/PRODUCTIZATION-NOTES.md`).
+
+**Migration from v0.2.0:** optional but recommended — delete your app's local copies of the reduced-motion block, the `:focus-visible` rule, the webkit-scrollbar rules, the `scrollbar-gutter` declarations, and the duplicated keyframes; they now come from the preset. Keep app-specific keyframes/shadows.
+
 ## v0.2.0 — 2026-06-20
 
 **Light theme + dual-mode preset.**
