@@ -85,9 +85,17 @@ var uebBrandPreset = {
         ":root": toCssVars(lightTheme),
         ".dark": toCssVars(darkTheme),
         // --- Base layer (shared by every consumer) ---
-        // Stable scrollbar gutter on the scroll container, so page-to-page
-        // height changes never shift centered layout. One rule, on <html> only.
-        html: { scrollbarGutter: "stable" },
+        // Stable viewport width, so page-to-page height changes never shift
+        // centered layout (e.g. the navbar). overflow-y:scroll forces a
+        // permanent scrollbar track on <html>: the content width is constant
+        // whether or not a page scrolls. We do NOT use scrollbar-gutter here —
+        // on a default `overflow: visible` <html> the viewport's gutter is
+        // propagated from <body>, so a rule on <html> is silently ignored;
+        // making <html> a real scroll container (non-visible overflow) avoids
+        // that propagation entirely. overflow-x:clip absorbs stray horizontal
+        // overflow without breaking the sticky navbar (legitimately wide
+        // content keeps its own overflow-x-auto wrapper).
+        html: { overflowY: "scroll", overflowX: "clip" },
         // Respect reduced-motion globally: neutralize entrance / looping /
         // long-transition animations site-wide.
         "@media (prefers-reduced-motion: reduce)": {

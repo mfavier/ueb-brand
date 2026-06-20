@@ -4,11 +4,17 @@ Shared brand identity (design tokens, fonts, crest) for the Uccle Europe Basketb
 Versioning: **SemVer** (`MAJOR.MINOR.PATCH`) — this is a library consumed by version, not an app.
 Consumed via tagged git dependency: `github:mfavier/ueb-brand#vX.Y.Z`.
 
-Current version: **v0.3.0**
+Current version: **v0.3.1**
 
 Most recent version first. Full detail in `CHANGELOG.md`.
 
 ---
+
+## v0.3.1 — 2026-06-20 · Fix: stable viewport width
+Base layer now uses `html { overflow-y: scroll; overflow-x: clip }` instead of `scrollbar-gutter`
+(which is defeated by viewport overflow propagation on a `visible` `<html>`). Kills the navbar
+horizontal shift when the vertical scrollbar toggles between routes. Consumer matrix: ueb-evolution
+→ v0.3.1 (pending).
 
 ## v0.3.0 — 2026-06-20 · Base layer (resets + keyframes)
 The preset now also owns common keyframes/animations and shared base CSS resets (scrollbar-gutter

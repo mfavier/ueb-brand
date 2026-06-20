@@ -5,6 +5,13 @@ All notable changes to the brand package. The package follows **SemVer**; see th
 
 Most recent first.
 
+## v0.3.1 — 2026-06-20
+
+**Fix: stable viewport width (navbar shift on route change).**
+
+- The base layer now uses `html { overflow-y: scroll; overflow-x: clip }` instead of `scrollbar-gutter: stable`. On a default `overflow: visible` `<html>`, the viewport's scrollbar gutter is propagated from `<body>`, so `scrollbar-gutter` on `<html>` was silently ignored and centered layout (the navbar) still shifted when the vertical scrollbar toggled between routes. Forcing a permanent scrollbar track makes the content width constant and sidesteps the propagation. `overflow-x: clip` absorbs stray horizontal overflow without breaking the sticky navbar.
+- No contract change. Consumers just bump and inherit the fix.
+
 ## v0.3.0 — 2026-06-20
 
 **Base layer (design-system foundation).**
