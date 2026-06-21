@@ -26,7 +26,7 @@ design-system layering. Purely additive — no contract change, no new entry poi
 | App | Min version | On this version | Notes |
 |---|---|---|---|
 | ueb-evolution | v0.1.0 | v0.3.0 (pending) | dark-only (`html.dark`); sets `--radius`; dropped local resets/keyframes |
-| ueb-manager | — | — | phase 4 (light) — reconcile any local base rules when adopting |
+| ueb-manager | v0.3.1 | v0.3.1 | phase 4 (light) — full re-skin onto preset palette; DM Sans body; default light; harmonized login/sidebar + `data-scroll-locked` shift fix |
 | ueb-public | — | — | phase 4 (light, reconcile palette + base rules) |
 | ueb-drills | — | — | phase 4 (light) |
 | ueb-stats | — | — | later (OKLCH adapter, non-game UI only) |
