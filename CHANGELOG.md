@@ -5,6 +5,18 @@ All notable changes to the brand package. The package follows **SemVer**; see th
 
 Most recent first.
 
+## v0.4.0 — 2026-10-03
+
+**Touch density tokens + secondary-text contrast (courtside tablet use).**
+
+- New density CSS variables emitted by the preset: `--target-min`, `--target-gap`, `--text-control`, `--leading-control`, `--text-table`, `--leading-table`, `--text-table-head`, `--leading-table-head`. `:root` holds the fine-pointer (desktop) values — `--target-min: 0px`, so nothing changes on desktop — and `@media (pointer: coarse)` the touch values (44 px targets, 8 px gaps, 16/15/13 px text). The criterion is the pointer type, not the width: a wide touch screen stays touch.
+- Base layer, coarse pointer only: every interactive element (`button`, `[role=button|tab|option|menuitem]`, `summary`, `select`, text `input`, `a[href]`) gets `min-height`/`min-width: var(--target-min)` and `touch-action: manipulation`, at specificity 0 (`:where`). Inline text links are unaffected (inline boxes ignore `min-*`, the WCAG 2.5.8 inline exception); checkbox / radio / switch keep their size (the label row is the target). Opt-out: `data-touch-exempt="<reason>"`.
+- New utilities: `min-h-target`, `min-w-target`, `gap-target`, `text-control`, `text-table`, `text-table-head`, `text-caption` (12 px, the floor). New variants: `coarse:` and `fine:`.
+- `muted-foreground` darkened/lightened to reach **≥ 7:1** on `background`, `card`, `muted` and `secondary`: dark `215 18% 64%` → `215 18% 72%`, light `250 10% 42%` → `250 10% 33%`. Exported `MIN_SECONDARY_TEXT_CONTRAST`, `SECONDARY_TEXT_SURFACES`, `densityTokens`, `CAPTION_FONT_SIZE`.
+- `npm test` (build + `node --test`): contrast floor per theme with a negative control on the old values, and the preset's density contract on generated CSS.
+
+**Migration from v0.3.x:** none required. To benefit, put `min-h-target` (+ `min-w-target` on icon buttons) and `text-control` on interactive base components; a caller's fixed `h-8` no longer defeats the touch floor because `min-height` wins over `height`.
+
 ## v0.3.1 — 2026-06-20
 
 **Fix: stable viewport width (navbar shift on route change).**
