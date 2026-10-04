@@ -1,0 +1,39 @@
+name: CI
+
+# Two apps depend on this package by tag. A change reaches them only through a
+# tag, so every PR is checked here and a tag is checked again before anyone bumps.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    tags: ['v*']
+
+jobs:
+  verify:
+    name: Type-check, build, test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      # `npm test` builds first, then runs the contrast, preset, tag-guard and
+      # CI-control tests against dist (what consumers install).
+      - run: npm test
+
+  tag:
+    name: Tag is releasable
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - run: node scripts/tag-guard.mjs "${GITHUB_REF_NAME}"

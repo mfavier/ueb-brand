@@ -93,6 +93,15 @@ import { clubBrand, clubFonts, darkTheme } from '@ueb/brand';
 3. `npm test` (builds, then checks contrast + the preset contract), commit `dist/`, tag a new version.
 4. Bump the dependency in each app and redeploy.
 
+## Release rule: no tag without CI
+
+Two apps install this package by tag, so a tag is a deployment. `.github/workflows/ci.yml`
+runs type-check, build and tests on every PR to `main` and on every push to `main`; on a `v*` tag
+it runs them again and `scripts/tag-guard.mjs` refuses a tag that does not match `package.json`
+or whose commit is not on `main`. Procedure: PR → CI green → merge → tag the merge commit.
+Never tag a branch. The negative controls (planted type error, planted failing test, bad tag)
+are in `test/`.
+
 ## Versioning & compatibility
 
 The package is **SemVer**, consumed via tagged git dependency (`#vX.Y.Z`). Apps pin a tag and
