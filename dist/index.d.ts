@@ -47,7 +47,51 @@ declare const darkTheme: SemanticTheme;
  * the package is rolled out there (phase 4).
  */
 declare const lightTheme: SemanticTheme;
+/** Secondary text (`muted-foreground`) must reach this WCAG ratio on every
+ *  surface it sits on — AAA, because the apps are read courtside, standing,
+ *  sometimes outdoors. Checked by test/contrast.test.mjs. */
+declare const MIN_SECONDARY_TEXT_CONTRAST = 7;
+/** The surfaces secondary text is drawn on (theme keys). */
+declare const SECONDARY_TEXT_SURFACES: readonly ["background", "card", "muted", "secondary"];
+/**
+ * Density tokens — they follow the POINTER TYPE, not the screen width: a wide
+ * touch screen (iPad landscape, Android tablet) is still touch. `fine` is the
+ * default and must stay identical to the pre-v0.4.0 desktop rendering
+ * (`--target-min: 0px` makes `min-h-target` a no-op); `coarse` applies under
+ * `@media (pointer: coarse)`.
+ *
+ * - target-min  minimum box of an interactive target (44 × 44 on touch)
+ * - target-gap  gap between adjacent targets
+ * - text-control / leading-control   label of buttons, selects, tabs, toggles
+ * - text-table / leading-table       numbers in stat tables
+ * - text-table-head / leading-table-head   stat table headers
+ */
+declare const densityTokens: {
+    readonly fine: {
+        readonly 'target-min': "0px";
+        readonly 'target-gap': "0.25rem";
+        readonly 'text-control': "0.875rem";
+        readonly 'leading-control': "1.25rem";
+        readonly 'text-table': "0.875rem";
+        readonly 'leading-table': "1.25rem";
+        readonly 'text-table-head': "0.75rem";
+        readonly 'leading-table-head': "1rem";
+    };
+    readonly coarse: {
+        readonly 'target-min': "2.75rem";
+        readonly 'target-gap': "0.5rem";
+        readonly 'text-control': "1rem";
+        readonly 'leading-control': "1.5rem";
+        readonly 'text-table': "0.9375rem";
+        readonly 'leading-table': "1.375rem";
+        readonly 'text-table-head': "0.8125rem";
+        readonly 'leading-table-head': "1.125rem";
+    };
+};
+/** Smallest text size allowed anywhere (`text-caption`). Replaces the
+ *  9–11 px arbitrary sizes. */
+declare const CAPTION_FONT_SIZE = "0.75rem";
 type ClubBrand = typeof clubBrand;
 type ClubFonts = typeof clubFonts;
 
-export { type ClubBrand, type ClubFonts, type SemanticTheme, clubBrand, clubFonts, darkTheme, lightTheme };
+export { CAPTION_FONT_SIZE, type ClubBrand, type ClubFonts, MIN_SECONDARY_TEXT_CONTRAST, SECONDARY_TEXT_SURFACES, type SemanticTheme, clubBrand, clubFonts, darkTheme, densityTokens, lightTheme };

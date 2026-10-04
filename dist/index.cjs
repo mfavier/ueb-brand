@@ -19,9 +19,13 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/index.ts
 var src_exports = {};
 __export(src_exports, {
+  CAPTION_FONT_SIZE: () => CAPTION_FONT_SIZE,
+  MIN_SECONDARY_TEXT_CONTRAST: () => MIN_SECONDARY_TEXT_CONTRAST,
+  SECONDARY_TEXT_SURFACES: () => SECONDARY_TEXT_SURFACES,
   clubBrand: () => clubBrand,
   clubFonts: () => clubFonts,
   darkTheme: () => darkTheme,
+  densityTokens: () => densityTokens,
   lightTheme: () => lightTheme
 });
 module.exports = __toCommonJS(src_exports);
@@ -62,7 +66,9 @@ var darkTheme = {
   secondary: "232 20% 18%",
   "secondary-foreground": "210 33% 92%",
   muted: "232 18% 16%",
-  "muted-foreground": "215 18% 64%",
+  // ≥ 7:1 on background, card, muted and secondary (outdoor / courtside reading,
+  // see MIN_SECONDARY_TEXT_CONTRAST). Was 64% (6.62:1 on card).
+  "muted-foreground": "215 18% 72%",
   accent: "205 58% 72%",
   // uranianBlue, densified for UI use
   "accent-foreground": "232 45% 14%",
@@ -98,8 +104,9 @@ var lightTheme = {
   // alabaster
   "secondary-foreground": "232 30% 22%",
   muted: "38 28% 93%",
-  "muted-foreground": "250 10% 42%",
-  // ultraViolet-ish, readable on light
+  // ultraViolet-ish; ≥ 7:1 on background, card, muted and secondary
+  // (MIN_SECONDARY_TEXT_CONTRAST). Was 42% (5.80:1 on background).
+  "muted-foreground": "250 10% 33%",
   accent: "205 65% 48%",
   // deeper azure — pops on light surfaces
   "accent-foreground": "0 0% 100%",
@@ -120,10 +127,39 @@ var lightTheme = {
   "sidebar-border": "38 22% 86%",
   "sidebar-ring": "205 65% 48%"
 };
+var MIN_SECONDARY_TEXT_CONTRAST = 7;
+var SECONDARY_TEXT_SURFACES = ["background", "card", "muted", "secondary"];
+var densityTokens = {
+  fine: {
+    "target-min": "0px",
+    "target-gap": "0.25rem",
+    "text-control": "0.875rem",
+    "leading-control": "1.25rem",
+    "text-table": "0.875rem",
+    "leading-table": "1.25rem",
+    "text-table-head": "0.75rem",
+    "leading-table-head": "1rem"
+  },
+  coarse: {
+    "target-min": "2.75rem",
+    "target-gap": "0.5rem",
+    "text-control": "1rem",
+    "leading-control": "1.5rem",
+    "text-table": "0.9375rem",
+    "leading-table": "1.375rem",
+    "text-table-head": "0.8125rem",
+    "leading-table-head": "1.125rem"
+  }
+};
+var CAPTION_FONT_SIZE = "0.75rem";
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  CAPTION_FONT_SIZE,
+  MIN_SECONDARY_TEXT_CONTRAST,
+  SECONDARY_TEXT_SURFACES,
   clubBrand,
   clubFonts,
   darkTheme,
+  densityTokens,
   lightTheme
 });

@@ -29,6 +29,9 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/tailwind-preset.ts
 var tailwind_preset_exports = {};
 __export(tailwind_preset_exports, {
+  COARSE_POINTER: () => COARSE_POINTER,
+  FINE_POINTER: () => FINE_POINTER,
+  TOUCH_TARGETS: () => TOUCH_TARGETS,
   default: () => tailwind_preset_default
 });
 module.exports = __toCommonJS(tailwind_preset_exports);
@@ -70,7 +73,9 @@ var darkTheme = {
   secondary: "232 20% 18%",
   "secondary-foreground": "210 33% 92%",
   muted: "232 18% 16%",
-  "muted-foreground": "215 18% 64%",
+  // ≥ 7:1 on background, card, muted and secondary (outdoor / courtside reading,
+  // see MIN_SECONDARY_TEXT_CONTRAST). Was 64% (6.62:1 on card).
+  "muted-foreground": "215 18% 72%",
   accent: "205 58% 72%",
   // uranianBlue, densified for UI use
   "accent-foreground": "232 45% 14%",
@@ -106,8 +111,9 @@ var lightTheme = {
   // alabaster
   "secondary-foreground": "232 30% 22%",
   muted: "38 28% 93%",
-  "muted-foreground": "250 10% 42%",
-  // ultraViolet-ish, readable on light
+  // ultraViolet-ish; ≥ 7:1 on background, card, muted and secondary
+  // (MIN_SECONDARY_TEXT_CONTRAST). Was 42% (5.80:1 on background).
+  "muted-foreground": "250 10% 33%",
   accent: "205 65% 48%",
   // deeper azure — pops on light surfaces
   "accent-foreground": "0 0% 100%",
@@ -128,9 +134,35 @@ var lightTheme = {
   "sidebar-border": "38 22% 86%",
   "sidebar-ring": "205 65% 48%"
 };
+var densityTokens = {
+  fine: {
+    "target-min": "0px",
+    "target-gap": "0.25rem",
+    "text-control": "0.875rem",
+    "leading-control": "1.25rem",
+    "text-table": "0.875rem",
+    "leading-table": "1.25rem",
+    "text-table-head": "0.75rem",
+    "leading-table-head": "1rem"
+  },
+  coarse: {
+    "target-min": "2.75rem",
+    "target-gap": "0.5rem",
+    "text-control": "1rem",
+    "leading-control": "1.5rem",
+    "text-table": "0.9375rem",
+    "leading-table": "1.375rem",
+    "text-table-head": "0.8125rem",
+    "leading-table-head": "1.125rem"
+  }
+};
+var CAPTION_FONT_SIZE = "0.75rem";
 
 // src/tailwind-preset.ts
 var toCssVars = (theme) => Object.fromEntries(Object.entries(theme).map(([k, v]) => [`--${k}`, v]));
+var COARSE_POINTER = "@media (pointer: coarse)";
+var FINE_POINTER = "@media (pointer: fine)";
+var TOUCH_TARGETS = ':where(button, [role="button"], [role="tab"], [role="option"], [role="menuitem"], summary, select, input:not([type="hidden"], [type="checkbox"], [type="radio"]), a[href]):not([role="checkbox"], [role="switch"], [role="radio"], [data-touch-exempt])';
 var uebBrandPreset = {
   theme: {
     extend: {
@@ -164,6 +196,20 @@ var uebBrandPreset = {
         kanit: [clubFonts.display, "sans-serif"],
         dm: [clubFonts.body, "system-ui", "sans-serif"],
         mono: [clubFonts.mono, "monospace"]
+      },
+      // Density tokens (v0.4.0): one class, two densities. The variables hold
+      // the desktop value by default and the touch value under
+      // (pointer: coarse) — see densityTokens. `min-h-target` survives a
+      // caller's `h-8` (min-height wins over height), which is what makes the
+      // 44 px floor systemic instead of per-component.
+      minHeight: { target: "var(--target-min)" },
+      minWidth: { target: "var(--target-min)" },
+      gap: { target: "var(--target-gap)" },
+      fontSize: {
+        control: ["var(--text-control)", { lineHeight: "var(--leading-control)" }],
+        table: ["var(--text-table)", { lineHeight: "var(--leading-table)" }],
+        "table-head": ["var(--text-table-head)", { lineHeight: "var(--leading-table-head)" }],
+        caption: [CAPTION_FONT_SIZE, { lineHeight: "1rem" }]
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -203,10 +249,29 @@ var uebBrandPreset = {
     }
   },
   plugins: [
-    (0, import_plugin.default)(({ addBase }) => {
+    (0, import_plugin.default)(({ addBase, addVariant }) => {
+      addVariant("coarse", COARSE_POINTER);
+      addVariant("fine", FINE_POINTER);
       addBase({
-        ":root": toCssVars(lightTheme),
+        ":root": { ...toCssVars(lightTheme), ...toCssVars(densityTokens.fine) },
         ".dark": toCssVars(darkTheme),
+        [COARSE_POINTER]: {
+          ":root": toCssVars(densityTokens.coarse),
+          // Touch floor for EVERY interactive element, hand-made ones included
+          // (a raw <button className="text-xs">), so the 44 px rule does not
+          // depend on each component remembering it. :where() keeps it at
+          // specificity 0 — an explicit utility still wins. Inline text links
+          // are unaffected (min-* does not apply to display:inline), which is
+          // the WCAG 2.5.8 inline exception. Checkbox / radio / switch keep
+          // their visual size: their label row carries the target. Opt-out for
+          // a deliberate exception: data-touch-exempt="<reason-key>".
+          [TOUCH_TARGETS]: {
+            minHeight: "var(--target-min)",
+            minWidth: "var(--target-min)",
+            // No double-tap-zoom delay on targets.
+            touchAction: "manipulation"
+          }
+        },
         // --- Base layer (shared by every consumer) ---
         // Stable viewport width, so page-to-page height changes never shift
         // centered layout (e.g. the navbar). overflow-y:scroll forces a
@@ -246,3 +311,9 @@ var uebBrandPreset = {
   ]
 };
 var tailwind_preset_default = uebBrandPreset;
+// Annotate the CommonJS export names for ESM import in node:
+0 && (module.exports = {
+  COARSE_POINTER,
+  FINE_POINTER,
+  TOUCH_TARGETS
+});

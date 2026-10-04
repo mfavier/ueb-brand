@@ -57,7 +57,9 @@ export const darkTheme: SemanticTheme = {
   'secondary-foreground': '210 33% 92%',
 
   muted: '232 18% 16%',
-  'muted-foreground': '215 18% 64%',
+  // ≥ 7:1 on background, card, muted and secondary (outdoor / courtside reading,
+  // see MIN_SECONDARY_TEXT_CONTRAST). Was 64% (6.62:1 on card).
+  'muted-foreground': '215 18% 72%',
 
   accent: '205 58% 72%', // uranianBlue, densified for UI use
   'accent-foreground': '232 45% 14%',
@@ -106,7 +108,9 @@ export const lightTheme: SemanticTheme = {
   'secondary-foreground': '232 30% 22%',
 
   muted: '38 28% 93%',
-  'muted-foreground': '250 10% 42%', // ultraViolet-ish, readable on light
+  // ultraViolet-ish; ≥ 7:1 on background, card, muted and secondary
+  // (MIN_SECONDARY_TEXT_CONTRAST). Was 42% (5.80:1 on background).
+  'muted-foreground': '250 10% 33%',
 
   accent: '205 65% 48%', // deeper azure — pops on light surfaces
   'accent-foreground': '0 0% 100%',
@@ -130,6 +134,54 @@ export const lightTheme: SemanticTheme = {
   'sidebar-border': '38 22% 86%',
   'sidebar-ring': '205 65% 48%',
 };
+
+/** Secondary text (`muted-foreground`) must reach this WCAG ratio on every
+ *  surface it sits on — AAA, because the apps are read courtside, standing,
+ *  sometimes outdoors. Checked by test/contrast.test.mjs. */
+export const MIN_SECONDARY_TEXT_CONTRAST = 7;
+
+/** The surfaces secondary text is drawn on (theme keys). */
+export const SECONDARY_TEXT_SURFACES = ['background', 'card', 'muted', 'secondary'] as const;
+
+/**
+ * Density tokens — they follow the POINTER TYPE, not the screen width: a wide
+ * touch screen (iPad landscape, Android tablet) is still touch. `fine` is the
+ * default and must stay identical to the pre-v0.4.0 desktop rendering
+ * (`--target-min: 0px` makes `min-h-target` a no-op); `coarse` applies under
+ * `@media (pointer: coarse)`.
+ *
+ * - target-min  minimum box of an interactive target (44 × 44 on touch)
+ * - target-gap  gap between adjacent targets
+ * - text-control / leading-control   label of buttons, selects, tabs, toggles
+ * - text-table / leading-table       numbers in stat tables
+ * - text-table-head / leading-table-head   stat table headers
+ */
+export const densityTokens = {
+  fine: {
+    'target-min': '0px',
+    'target-gap': '0.25rem',
+    'text-control': '0.875rem',
+    'leading-control': '1.25rem',
+    'text-table': '0.875rem',
+    'leading-table': '1.25rem',
+    'text-table-head': '0.75rem',
+    'leading-table-head': '1rem',
+  },
+  coarse: {
+    'target-min': '2.75rem',
+    'target-gap': '0.5rem',
+    'text-control': '1rem',
+    'leading-control': '1.5rem',
+    'text-table': '0.9375rem',
+    'leading-table': '1.375rem',
+    'text-table-head': '0.8125rem',
+    'leading-table-head': '1.125rem',
+  },
+} as const;
+
+/** Smallest text size allowed anywhere (`text-caption`). Replaces the
+ *  9–11 px arbitrary sizes. */
+export const CAPTION_FONT_SIZE = '0.75rem';
 
 export type ClubBrand = typeof clubBrand;
 export type ClubFonts = typeof clubFonts;

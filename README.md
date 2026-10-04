@@ -15,7 +15,7 @@ ready-to-consume adapters, so a re-skin is one edit + a version bump.
 ## Install (consumers)
 
 ```bash
-npm install github:mfavier/ueb-brand#v0.3.0
+npm install github:mfavier/ueb-brand#v0.4.0
 ```
 
 `dist/` is committed, so consumers don't build the package.
@@ -49,6 +49,19 @@ Load the fonts in `index.html` (Kanit + DM Sans + DM Mono):
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&family=Kanit:wght@500;600;700&display=swap" rel="stylesheet" />
 ```
 
+**Density (touch) tokens** — they switch on `@media (pointer: coarse)`, not on width:
+
+| Utility | Fine pointer (desktop) | Coarse pointer (touch) |
+|---|---|---|
+| `min-h-target` / `min-w-target` | 0 (no-op) | 44 px |
+| `gap-target` | 4 px | 8 px |
+| `text-control` | 14 px | 16 px |
+| `text-table` | 14 px | 15 px |
+| `text-table-head` | 12 px | 13 px |
+| `text-caption` | 12 px | 12 px (floor) |
+
+Variants `coarse:` and `fine:` cover the rest (e.g. `fine:h-8` keeps a compact desktop override).
+
 **Crest (React):**
 
 ```tsx
@@ -68,7 +81,7 @@ import { clubBrand, clubFonts, darkTheme } from '@ueb/brand';
 
 | Import | Contents |
 |---|---|
-| `@ueb/brand` | `clubBrand`, `clubFonts`, `darkTheme` (framework-agnostic) |
+| `@ueb/brand` | `clubBrand`, `clubFonts`, `darkTheme`, `lightTheme`, `densityTokens`, contrast constants (framework-agnostic) |
 | `@ueb/brand/tailwind-preset` | Tailwind v3 preset (theme, keyframes, `:root`/`.dark` vars + base resets via addBase) |
 | `@ueb/brand/react` | `ClubLogo`, `clubLogoSvg` |
 | `@ueb/brand/logo.svg` | the raw vector crest |
@@ -77,7 +90,7 @@ import { clubBrand, clubFonts, darkTheme } from '@ueb/brand';
 
 1. Edit `src/tokens.ts` — `clubBrand` hex (and any `darkTheme` role hues).
 2. Replace `src/logos/uccle-europe.svg`.
-3. `npm run build`, commit `dist/`, tag a new version.
+3. `npm test` (builds, then checks contrast + the preset contract), commit `dist/`, tag a new version.
 4. Bump the dependency in each app and redeploy.
 
 ## Versioning & compatibility

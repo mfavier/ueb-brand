@@ -1,13 +1,18 @@
 import {
+  CAPTION_FONT_SIZE,
   clubBrand,
   clubFonts,
   darkTheme,
+  densityTokens,
   lightTheme
-} from "./chunk-2NSPXCU6.js";
+} from "./chunk-EWEYYK7W.js";
 
 // src/tailwind-preset.ts
 import plugin from "tailwindcss/plugin";
 var toCssVars = (theme) => Object.fromEntries(Object.entries(theme).map(([k, v]) => [`--${k}`, v]));
+var COARSE_POINTER = "@media (pointer: coarse)";
+var FINE_POINTER = "@media (pointer: fine)";
+var TOUCH_TARGETS = ':where(button, [role="button"], [role="tab"], [role="option"], [role="menuitem"], summary, select, input:not([type="hidden"], [type="checkbox"], [type="radio"]), a[href]):not([role="checkbox"], [role="switch"], [role="radio"], [data-touch-exempt])';
 var uebBrandPreset = {
   theme: {
     extend: {
@@ -41,6 +46,20 @@ var uebBrandPreset = {
         kanit: [clubFonts.display, "sans-serif"],
         dm: [clubFonts.body, "system-ui", "sans-serif"],
         mono: [clubFonts.mono, "monospace"]
+      },
+      // Density tokens (v0.4.0): one class, two densities. The variables hold
+      // the desktop value by default and the touch value under
+      // (pointer: coarse) — see densityTokens. `min-h-target` survives a
+      // caller's `h-8` (min-height wins over height), which is what makes the
+      // 44 px floor systemic instead of per-component.
+      minHeight: { target: "var(--target-min)" },
+      minWidth: { target: "var(--target-min)" },
+      gap: { target: "var(--target-gap)" },
+      fontSize: {
+        control: ["var(--text-control)", { lineHeight: "var(--leading-control)" }],
+        table: ["var(--text-table)", { lineHeight: "var(--leading-table)" }],
+        "table-head": ["var(--text-table-head)", { lineHeight: "var(--leading-table-head)" }],
+        caption: [CAPTION_FONT_SIZE, { lineHeight: "1rem" }]
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,10 +99,29 @@ var uebBrandPreset = {
     }
   },
   plugins: [
-    plugin(({ addBase }) => {
+    plugin(({ addBase, addVariant }) => {
+      addVariant("coarse", COARSE_POINTER);
+      addVariant("fine", FINE_POINTER);
       addBase({
-        ":root": toCssVars(lightTheme),
+        ":root": { ...toCssVars(lightTheme), ...toCssVars(densityTokens.fine) },
         ".dark": toCssVars(darkTheme),
+        [COARSE_POINTER]: {
+          ":root": toCssVars(densityTokens.coarse),
+          // Touch floor for EVERY interactive element, hand-made ones included
+          // (a raw <button className="text-xs">), so the 44 px rule does not
+          // depend on each component remembering it. :where() keeps it at
+          // specificity 0 — an explicit utility still wins. Inline text links
+          // are unaffected (min-* does not apply to display:inline), which is
+          // the WCAG 2.5.8 inline exception. Checkbox / radio / switch keep
+          // their visual size: their label row carries the target. Opt-out for
+          // a deliberate exception: data-touch-exempt="<reason-key>".
+          [TOUCH_TARGETS]: {
+            minHeight: "var(--target-min)",
+            minWidth: "var(--target-min)",
+            // No double-tap-zoom delay on targets.
+            touchAction: "manipulation"
+          }
+        },
         // --- Base layer (shared by every consumer) ---
         // Stable viewport width, so page-to-page height changes never shift
         // centered layout (e.g. the navbar). overflow-y:scroll forces a
@@ -124,5 +162,8 @@ var uebBrandPreset = {
 };
 var tailwind_preset_default = uebBrandPreset;
 export {
+  COARSE_POINTER,
+  FINE_POINTER,
+  TOUCH_TARGETS,
   tailwind_preset_default as default
 };
