@@ -1,0 +1,25 @@
+{
+  "name": "ueb-social-studio",
+  "version": "0.1.1",
+  "description": "Créer et adapter les publications Uccle Europe Basketball avec la charte, les modèles et les actifs officiels du club.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "UEB — Atelier communication",
+    "shortDescription": "Les posts d’Uccle Europe.",
+    "longDescription": "Préparer les visuels et les textes du club, adapter les modèles et créer de nouvelles compositions à partir des règles UEB. Inclut la palette publique, les polices, le blason, les variantes décoratives, les exemples et un moteur SVG. Les données de publication sont fournies au moment de la demande.",
+    "developerName": "Uccle Europe Basketball",
+    "category": "Productivity",
+    "websiteURL": "https://uebasket.be/",
+    "brandColor": "#3448A1",
+    "composerIcon": "./assets/ueb-plugin-icon.png",
+    "logo": "./assets/ueb-plugin-icon.png",
+    "defaultPrompt": [
+      "Prépare le programme du week-end UEB à partir des rencontres que je joins.",
+      "Crée un Player of the week clair avec ce portrait et ces informations vérifiées.",
+      "Adapte l’identité UEB à une annonce de recrutement de bénévoles."
+    ]
+  },
+  "author": {
+    "name": "Uccle Europe Basketball"
+  }
+}

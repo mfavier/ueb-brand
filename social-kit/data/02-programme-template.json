@@ -1,0 +1,40 @@
+{
+  "edition": "[DATES DU WEEK-END · ANNÉE]",
+  "matches": [
+    {
+      "day": "[JOUR]",
+      "category": "[CAT.]",
+      "opponent": "[ADVERSAIRE]",
+      "venue": "[SALLE · VILLE]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
+      "time": "00:00"
+    },
+    {
+      "day": "[JOUR]",
+      "category": "[CAT.]",
+      "opponent": "[ADVERSAIRE]",
+      "venue": "[SALLE · VILLE]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
+      "time": "00:00"
+    },
+    {
+      "day": "[JOUR]",
+      "category": "[CAT.]",
+      "opponent": "[ADVERSAIRE]",
+      "venue": "[SALLE · VILLE]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
+      "time": "00:00"
+    },
+    {
+      "day": "[JOUR]",
+      "category": "[CAT.]",
+      "opponent": "[ADVERSAIRE]",
+      "venue": "[SALLE · VILLE]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
+      "time": "00:00"
+    }
+  ],
+  "template": "02-programme",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 02-programme"
+}

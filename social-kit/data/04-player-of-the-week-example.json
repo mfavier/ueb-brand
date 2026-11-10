@@ -1,0 +1,28 @@
+{
+  "edition": "9–15 NOVEMBRE 2026",
+  "category": "SENIORS · ARRIÈRE",
+  "name": [
+    "ALEX",
+    "MARTIN."
+  ],
+  "number": "12",
+  "portrait": "assets/photos/portrait-illustratif-adulte.png",
+  "stats": [
+    {
+      "value": "24",
+      "label": "POINTS"
+    },
+    {
+      "value": "8",
+      "label": "REBONDS"
+    },
+    {
+      "value": "5",
+      "label": "PASSES"
+    }
+  ],
+  "alt": "Exemple fictif : portrait illustratif généré d’un adulte, nom Alex Martin et statistiques inventés pour montrer la composition claire.",
+  "template": "04-player-of-the-week",
+  "demo": true,
+  "variant": "light"
+}

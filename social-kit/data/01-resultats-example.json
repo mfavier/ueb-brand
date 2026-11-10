@@ -1,0 +1,32 @@
+{
+  "edition": "14–15 NOVEMBRE 2026",
+  "matches": [
+    {
+      "category": "U16 A · CHAMPIONNAT",
+      "home": "Uccle Europe",
+      "away": "RBC Rivage",
+      "score": "78 – 64"
+    },
+    {
+      "category": "U18 A · CHAMPIONNAT",
+      "home": "BC Horizon",
+      "away": "Uccle Europe",
+      "score": "61 – 73"
+    },
+    {
+      "category": "P2 · CHAMPIONNAT",
+      "home": "Uccle Europe",
+      "away": "Atlas Basket",
+      "score": "69 – 74"
+    },
+    {
+      "category": "U14 A · CHAMPIONNAT",
+      "home": "Union Basket",
+      "away": "Uccle Europe",
+      "score": "52 – 68"
+    }
+  ],
+  "alt": "Étude fictive : bilan de quatre rencontres, noms des équipes à gauche et scores dans le même ordre à droite.",
+  "template": "01-resultats",
+  "demo": true
+}

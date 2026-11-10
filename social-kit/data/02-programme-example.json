@@ -1,0 +1,40 @@
+{
+  "edition": "14–15 NOVEMBRE 2026",
+  "matches": [
+    {
+      "day": "SAM. 14",
+      "category": "U16 A",
+      "opponent": "RBC Rivage",
+      "venue": "Salle A · Uccle",
+      "side": "UEB À DOMICILE",
+      "time": "14:30"
+    },
+    {
+      "day": "SAM. 14",
+      "category": "U18 A",
+      "opponent": "BC Horizon",
+      "venue": "Salle B · Bruxelles",
+      "side": "UEB À L’EXTÉRIEUR",
+      "time": "17:00"
+    },
+    {
+      "day": "DIM. 15",
+      "category": "P2",
+      "opponent": "Atlas Basket",
+      "venue": "Salle A · Uccle",
+      "side": "UEB À DOMICILE",
+      "time": "15:00"
+    },
+    {
+      "day": "DIM. 15",
+      "category": "U14 A",
+      "opponent": "Union Basket",
+      "venue": "Salle C · Bruxelles",
+      "side": "UEB À L’EXTÉRIEUR",
+      "time": "11:00"
+    }
+  ],
+  "alt": "Programme entièrement fictif de quatre matchs : jour, équipe UEB, adversaire, salle, domicile ou extérieur et heure.",
+  "template": "02-programme",
+  "demo": true
+}

@@ -1,0 +1,32 @@
+{
+  "edition": "[DATES DU WEEK-END · ANNÉE]",
+  "matches": [
+    {
+      "category": "[CATÉGORIE · COMPÉTITION]",
+      "home": "[ÉQUIPE DOMICILE]",
+      "away": "[ÉQUIPE EXTÉRIEURE]",
+      "score": "— – —"
+    },
+    {
+      "category": "[CATÉGORIE · COMPÉTITION]",
+      "home": "[ÉQUIPE DOMICILE]",
+      "away": "[ÉQUIPE EXTÉRIEURE]",
+      "score": "— – —"
+    },
+    {
+      "category": "[CATÉGORIE · COMPÉTITION]",
+      "home": "[ÉQUIPE DOMICILE]",
+      "away": "[ÉQUIPE EXTÉRIEURE]",
+      "score": "— – —"
+    },
+    {
+      "category": "[CATÉGORIE · COMPÉTITION]",
+      "home": "[ÉQUIPE DOMICILE]",
+      "away": "[ÉQUIPE EXTÉRIEURE]",
+      "score": "— – —"
+    }
+  ],
+  "template": "01-resultats",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 01-resultats"
+}

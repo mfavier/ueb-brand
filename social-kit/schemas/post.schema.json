@@ -1,0 +1,542 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ueb:brand:social-post:0.1.0",
+  "title": "Données des sept compositions UEB",
+  "description": "Contrat des mises en page existantes. Les compositions nouvelles utilisent les règles générales ; elles ne sont pas envoyées au moteur sous un nom de template inconnu.",
+  "type": "object",
+  "required": [
+    "template",
+    "demo",
+    "alt"
+  ],
+  "properties": {
+    "template": {
+      "enum": [
+        "01-resultats",
+        "02-programme",
+        "03-partenaire",
+        "04-player-of-the-week",
+        "05-annonce-officielle",
+        "06-communication",
+        "07-score-final"
+      ]
+    },
+    "demo": {
+      "type": "boolean"
+    },
+    "alt": {
+      "$ref": "#/$defs/text"
+    },
+    "edition": {
+      "$ref": "#/$defs/text"
+    },
+    "footer": {
+      "type": "string"
+    },
+    "backgroundStyle": {
+      "enum": [
+        "plain",
+        "crest"
+      ]
+    },
+    "surface": {
+      "enum": [
+        "white",
+        "paper",
+        "sky"
+      ]
+    },
+    "variant": {
+      "enum": [
+        "light",
+        "dark"
+      ]
+    },
+    "photoCaption": {
+      "type": "string"
+    },
+    "logo": {
+      "$ref": "#/$defs/asset"
+    },
+    "photo": {
+      "$ref": "#/$defs/asset"
+    },
+    "portrait": {
+      "$ref": "#/$defs/asset"
+    },
+    "backgroundPhoto": {
+      "$ref": "#/$defs/asset"
+    },
+    "crest": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "opacity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "color": {
+          "enum": [
+            "night",
+            "blue",
+            "white"
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "01-resultats"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "matches": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "$ref": "#/$defs/text"
+                },
+                "home": {
+                  "$ref": "#/$defs/text"
+                },
+                "away": {
+                  "$ref": "#/$defs/text"
+                },
+                "score": {
+                  "$ref": "#/$defs/text"
+                }
+              },
+              "required": [
+                "category",
+                "home",
+                "away",
+                "score"
+              ]
+            }
+          }
+        },
+        "required": [
+          "edition",
+          "matches"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "02-programme"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "matches": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "properties": {
+                "day": {
+                  "$ref": "#/$defs/text"
+                },
+                "category": {
+                  "$ref": "#/$defs/text"
+                },
+                "opponent": {
+                  "$ref": "#/$defs/text"
+                },
+                "venue": {
+                  "$ref": "#/$defs/text"
+                },
+                "side": {
+                  "$ref": "#/$defs/text"
+                },
+                "time": {
+                  "$ref": "#/$defs/text"
+                }
+              },
+              "required": [
+                "day",
+                "category",
+                "opponent",
+                "venue",
+                "side",
+                "time"
+              ]
+            }
+          }
+        },
+        "required": [
+          "edition",
+          "matches"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "03-partenaire"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/lines"
+          },
+          "contribution": {
+            "$ref": "#/$defs/lines"
+          },
+          "season": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "required": [
+          "contribution",
+          "season"
+        ],
+        "anyOf": [
+          {
+            "required": [
+              "name"
+            ]
+          },
+          {
+            "required": [
+              "logo"
+            ],
+            "properties": {
+              "logo": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "04-player-of-the-week"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/lines"
+          },
+          "category": {
+            "$ref": "#/$defs/text"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/text"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "stats": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/text"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "label": {
+                  "$ref": "#/$defs/text"
+                }
+              },
+              "required": [
+                "value",
+                "label"
+              ]
+            }
+          }
+        },
+        "required": [
+          "edition",
+          "name",
+          "category",
+          "number",
+          "stats"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "05-annonce-officielle"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "$ref": "#/$defs/lines"
+          },
+          "body": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "items": {
+              "$ref": "#/$defs/text"
+            }
+          },
+          "signature": {
+            "$ref": "#/$defs/text"
+          }
+        },
+        "required": [
+          "edition",
+          "subject",
+          "body",
+          "signature"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "06-communication"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "$ref": "#/$defs/lines"
+          },
+          "when": {
+            "$ref": "#/$defs/text"
+          },
+          "details": {
+            "$ref": "#/$defs/lines"
+          },
+          "note": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "edition",
+          "subject",
+          "when",
+          "details",
+          "note"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "template": {
+            "const": "07-score-final"
+          }
+        },
+        "required": [
+          "template"
+        ]
+      },
+      "then": {
+        "type": "object",
+        "properties": {
+          "home": {
+            "$ref": "#/$defs/lines"
+          },
+          "away": {
+            "$ref": "#/$defs/lines"
+          },
+          "homeScore": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/score"
+              },
+              {
+                "const": "—"
+              }
+            ]
+          },
+          "awayScore": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/score"
+              },
+              {
+                "const": "—"
+              }
+            ]
+          },
+          "closing": {
+            "$ref": "#/$defs/lines"
+          }
+        },
+        "required": [
+          "edition",
+          "home",
+          "away",
+          "homeScore",
+          "awayScore"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "backgroundPhoto"
+                    ],
+                    "properties": {
+                      "backgroundPhoto": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  {
+                    "required": [
+                      "photo"
+                    ],
+                    "properties": {
+                      "photo": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "then": {
+              "required": [
+                "closing"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "demo": {
+                  "const": false
+                }
+              },
+              "required": [
+                "demo"
+              ]
+            },
+            "then": {
+              "properties": {
+                "homeScore": {
+                  "$ref": "#/$defs/score"
+                },
+                "awayScore": {
+                  "$ref": "#/$defs/score"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lines": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "asset": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "score": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        {
+          "type": "string",
+          "pattern": "^[0-9]{1,3}$"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

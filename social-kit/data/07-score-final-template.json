@@ -1,0 +1,22 @@
+{
+  "edition": "[ÉQUIPE · COMPÉTITION · DATE]",
+  "home": [
+    "ÉQUIPE",
+    "DOMICILE"
+  ],
+  "away": [
+    "ÉQUIPE",
+    "EXTÉRIEURE"
+  ],
+  "homeScore": "—",
+  "awayScore": "—",
+  "photo": null,
+  "photoCaption": "",
+  "closing": [
+    "[LIEU · DATE]",
+    "[COMPÉTITION]"
+  ],
+  "template": "07-score-final",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 07-score-final"
+}
