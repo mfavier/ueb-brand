@@ -5,6 +5,14 @@ source of truth for colour design tokens, typography, and the crest logo.
 
 Decision record: `ueb-documentation/docs/adr/0001-brand-identity-shared-package.md`.
 
+## Social media production guide
+
+See [Instructions de création des posts](GUIDE-POSTS-RESEAUX-SOCIAUX.md) (French)
+for the transferable Instagram, WhatsApp, Facebook and LinkedIn brief: public-site
+2026 palette, typography, crest rules, layouts, copy templates and delivery checks.
+The guide explicitly distinguishes the public 2026 palette from this package's
+current app tokens.
+
 ## Why
 
 The `club.*` palette and the `:root` theme variables used to be copy-pasted across
