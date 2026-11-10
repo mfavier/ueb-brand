@@ -1,0 +1,16 @@
+{
+  "edition": "[N° DU COMMUNIQUÉ · DATE COMPLÈTE]",
+  "subject": [
+    "[SUJET]",
+    "[PRINCIPAL]."
+  ],
+  "body": [
+    "[INFORMATION VALIDÉE PAR LE CLUB]",
+    "[SUITE OU DOCUMENT À CONSULTER]",
+    "[UNE PRÉCISION UTILE SI NÉCESSAIRE]"
+  ],
+  "signature": "[SIGNATAIRE OU INSTANCE DU CLUB]",
+  "template": "05-annonce-officielle",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 05-annonce-officielle"
+}

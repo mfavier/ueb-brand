@@ -1,0 +1,15 @@
+{
+  "name": [
+    "LOGO",
+    "PARTENAIRE"
+  ],
+  "logo": null,
+  "contribution": [
+    "[CONTRIBUTION CONCRÈTE]",
+    "[AU PROJET DU CLUB]"
+  ],
+  "season": "[SAISON OU PÉRIODE]",
+  "template": "03-partenaire",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 03-partenaire"
+}

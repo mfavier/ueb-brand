@@ -4,6 +4,8 @@ Version 1.0 · 10 novembre 2026 · Référence visuelle : nouveau site `ueb-publ
 
 Ce document se transmet à une personne chargée de la communication, un graphiste ou un assistant IA. Il contient les instructions pour fabriquer les visuels et les textes Instagram, WhatsApp, Facebook et LinkedIn d’Uccle Europe Basketball. Les couleurs, les polices, les signatures et la direction visuelle viennent du nouveau site. Les formats, marges, tailles de texte et gabarits sociaux sont des **conventions de fabrication définies dans ce guide** pour décliner cette identité ; ils ne sont pas présentés comme une charte sociale antérieurement validée.
 
+**Pour produire à partir d’une composition existante**, utiliser le [kit de templates et d’exemples](social-kit/README.md), sa [planche visuelle](social-kit/previews/planche-feed.png) et son [brief d’exécution ChatGPT](social-kit/BRIEF-CHATGPT.md). Cette proposition décline les sept rubriques récurrentes du club ; ses exemples portent des données fictives. Le modèle choisi fixe la composition à conserver.
+
 ## 1. L’identité à faire reconnaître
 
 **Uccle Europe Basketball**, ou **UEB** après une première mention explicite, est un club de basket ancré à Uccle, à Bruxelles, **depuis 1946**. Sa communication associe le jeu, la progression des joueurs et le collectif : joueurs, familles, entraîneurs, bénévoles et partenaires.

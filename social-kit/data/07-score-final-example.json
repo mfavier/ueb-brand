@@ -1,0 +1,22 @@
+{
+  "edition": "U16 A · CHAMPIONNAT · 14.11.2026",
+  "home": [
+    "UCCLE",
+    "EUROPE"
+  ],
+  "away": [
+    "RBC",
+    "RIVAGE"
+  ],
+  "homeScore": "78",
+  "awayScore": "64",
+  "photo": "assets/photos/u16-champions-2025.jpg",
+  "photoCaption": "ARCHIVE U16 · 2025 · SCORE FICTIF",
+  "closing": [
+    "Le collectif.",
+    "Jusqu’au bout."
+  ],
+  "alt": "Score fictif : Uccle Europe 78, RBC Rivage 64. Photo d’archive de l’équipe U16 en 2025, sans lien avec la rencontre fictive.",
+  "template": "07-score-final",
+  "demo": true
+}

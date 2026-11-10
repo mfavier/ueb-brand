@@ -13,6 +13,10 @@ for the transferable Instagram, WhatsApp, Facebook and LinkedIn brief: public-si
 The guide explicitly distinguishes the public 2026 palette from this package's
 current app tokens.
 
+The [social template kit](social-kit/README.md) adds seven editable layouts,
+fictional examples, feed/story PNGs, the official crest, fonts and a focused
+ChatGPT execution brief. Start with the [visual board](social-kit/previews/planche-feed.png).
+
 ## Why
 
 The `club.*` palette and the `:root` theme variables used to be copy-pasted across

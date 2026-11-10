@@ -1,0 +1,16 @@
+{
+  "edition": "VIE DU CLUB · INFORMATION PRATIQUE",
+  "subject": [
+    "[INFORMATION]",
+    "[PRINCIPALE]."
+  ],
+  "when": "[DATE COMPLÈTE · ANNÉE]",
+  "details": [
+    "[PUBLIC · HORAIRE]",
+    "[LIEU OU ACTION]"
+  ],
+  "note": "[UNE PRÉCISION UTILE]",
+  "template": "06-communication",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 06-communication"
+}

@@ -1,0 +1,129 @@
+{
+  "version": "0.1",
+  "status": "Proposition graphique à revoir",
+  "count": 28,
+  "palette": {
+    "night": "#101E42",
+    "blue": "#3448A1",
+    "sky": "#B6DDF5",
+    "gold": "#D8AF69",
+    "white": "#FFFFFF",
+    "paper": "#F5F8FC",
+    "muted": "#526078",
+    "line": "#DCE2EC"
+  },
+  "files": [
+    {
+      "file": "examples/01-resultats-feed.svg",
+      "sha256": "13e557afc6f91a1a5e61a2ff925eda990099544f2653e265fb5654a83bdb365e"
+    },
+    {
+      "file": "examples/01-resultats-story.svg",
+      "sha256": "e99cae2f0204075e02abb90330cdb41557f26012319e4337fa535ccf84688c5d"
+    },
+    {
+      "file": "examples/02-programme-feed.svg",
+      "sha256": "584ae12b07a674657801c632638f62e4dcbbcf1109b225f39deb639a47da05f4"
+    },
+    {
+      "file": "examples/02-programme-story.svg",
+      "sha256": "9c09a3a9ef82652338d2116146fdd8639fe01c8aa029f614644a75b61fc0395e"
+    },
+    {
+      "file": "examples/03-partenaire-feed.svg",
+      "sha256": "11980220ffc2c76509d9681fc69f5dd0d706f7313efb29035ca830058861d1a6"
+    },
+    {
+      "file": "examples/03-partenaire-story.svg",
+      "sha256": "2a94e223dc7b81c58eb82627a62975031cb3a99b196b93695890b4bdff51d2f8"
+    },
+    {
+      "file": "examples/04-player-of-the-week-feed.svg",
+      "sha256": "489da3bd4e4edf298f11eec06207c34c63cd4767d748bf8da907e793475f2463"
+    },
+    {
+      "file": "examples/04-player-of-the-week-story.svg",
+      "sha256": "3616a930e93998ce82217bc31c60602a9342448bd3f744516f319ad054559d66"
+    },
+    {
+      "file": "examples/05-annonce-officielle-feed.svg",
+      "sha256": "c0f2140820ca8087acb1a769eb970a63153c138077c750c4caddb987753dcf2b"
+    },
+    {
+      "file": "examples/05-annonce-officielle-story.svg",
+      "sha256": "3e696a440a4694c69f4c02b2d3699650a7e0bd4e279f88f97f62629f7366b433"
+    },
+    {
+      "file": "examples/06-communication-feed.svg",
+      "sha256": "d1134032a40f1414e36b8842fc22a8cb17891e9cd41e63c5bdafa0d46e0862a1"
+    },
+    {
+      "file": "examples/06-communication-story.svg",
+      "sha256": "54b45bddf1e7f357bfc05cf7be698034cbaf9d0706beebde7c1152c4ea7e853f"
+    },
+    {
+      "file": "examples/07-score-final-feed.svg",
+      "sha256": "9f337f0e0d0362d12b9cc54a914918cc1b9b4e9306bfd45f301b81e6b1135ab4"
+    },
+    {
+      "file": "examples/07-score-final-story.svg",
+      "sha256": "1996090e8aa14c0ec5aba98680b4085a455385e3c19f9850b76215038af3871d"
+    },
+    {
+      "file": "templates/01-resultats-feed.svg",
+      "sha256": "57310539f53ebbbd4b15f09215ca17f8b16376d09df0b269b2a82c5e39ed0b6c"
+    },
+    {
+      "file": "templates/01-resultats-story.svg",
+      "sha256": "338d9234055d039bf9dc560c564a7c6124bdd60c687936c4c53b6c4f5e145cbc"
+    },
+    {
+      "file": "templates/02-programme-feed.svg",
+      "sha256": "4910828d237cd8c43df40a0197dc342d8594386f8d9b1f652ce339cfb99f6b23"
+    },
+    {
+      "file": "templates/02-programme-story.svg",
+      "sha256": "c9bdf9c7dfda0f18eed932e19f2130490a8c4f23e214c0e7719247159e7964b6"
+    },
+    {
+      "file": "templates/03-partenaire-feed.svg",
+      "sha256": "7e41ee4da0d085d85526edd973eff0ea69a4df59dfc694f1af521922b2caa4d1"
+    },
+    {
+      "file": "templates/03-partenaire-story.svg",
+      "sha256": "822c489b8975fcf2ac22cac83e8366217aa3f378fd58e7f80624413b92c651b7"
+    },
+    {
+      "file": "templates/04-player-of-the-week-feed.svg",
+      "sha256": "0c9065520e731feaf6f31338f39f3963e77a401770241c348e2925297d3e9118"
+    },
+    {
+      "file": "templates/04-player-of-the-week-story.svg",
+      "sha256": "a66604351cf4769d55fb31b43018dd1ed16f388161271cc803da62a2aaed9ece"
+    },
+    {
+      "file": "templates/05-annonce-officielle-feed.svg",
+      "sha256": "fd5d586f03a5be549137f61b1fc8b0a3d6667b9703612d75aced6e583c90fa82"
+    },
+    {
+      "file": "templates/05-annonce-officielle-story.svg",
+      "sha256": "cecfc60b60a4f1f07f2999cd7720fb77d5ee7f1ed60b24efcb64cfe37ed3bb76"
+    },
+    {
+      "file": "templates/06-communication-feed.svg",
+      "sha256": "7cc840ede4ef7308d84fd662f34c302ba643010ac6fb2f3d63197a38ff174c82"
+    },
+    {
+      "file": "templates/06-communication-story.svg",
+      "sha256": "79e275690cafe09aa59b377ebcbd9c10ab316989b3c9e78d98f31a4a105f7608"
+    },
+    {
+      "file": "templates/07-score-final-feed.svg",
+      "sha256": "3444f8f36993b1e07ad5ecf46125116a3958f77a946f30f5d27c7920a1f759cb"
+    },
+    {
+      "file": "templates/07-score-final-story.svg",
+      "sha256": "2cb5ccb712f6daa38c2f62c0d79b076575f11ed12f5a2fe245ed6234f9797d09"
+    }
+  ]
+}

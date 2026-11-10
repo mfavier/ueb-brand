@@ -1,0 +1,27 @@
+{
+  "edition": "SEMAINE DU 9 NOVEMBRE 2026",
+  "category": "U18 A · ARRIÈRE",
+  "name": [
+    "ALEX",
+    "MARTIN."
+  ],
+  "number": "12",
+  "portrait": null,
+  "stats": [
+    {
+      "value": "24",
+      "label": "POINTS"
+    },
+    {
+      "value": "8",
+      "label": "REBONDS"
+    },
+    {
+      "value": "5",
+      "label": "PASSES"
+    }
+  ],
+  "alt": "Joueur et statistiques fictifs : Alex Martin, numéro 12, 24 points, 8 rebonds et 5 passes. Exemple sans portrait.",
+  "template": "04-player-of-the-week",
+  "demo": true
+}

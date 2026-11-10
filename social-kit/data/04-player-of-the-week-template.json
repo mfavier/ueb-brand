@@ -1,0 +1,27 @@
+{
+  "edition": "[SEMAINE ET ANNÉE]",
+  "category": "[ÉQUIPE · POSTE]",
+  "name": [
+    "PRÉNOM",
+    "NOM."
+  ],
+  "number": "00",
+  "portrait": null,
+  "stats": [
+    {
+      "value": "—",
+      "label": "[REPÈRE]"
+    },
+    {
+      "value": "—",
+      "label": "[REPÈRE]"
+    },
+    {
+      "value": "—",
+      "label": "[REPÈRE]"
+    }
+  ],
+  "template": "04-player-of-the-week",
+  "demo": true,
+  "alt": "Modèle de composition à compléter : 04-player-of-the-week"
+}
