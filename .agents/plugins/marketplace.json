@@ -1,0 +1,20 @@
+{
+  "name": "ueb-brand-local",
+  "interface": {
+    "displayName": "Uccle Europe — Communication"
+  },
+  "plugins": [
+    {
+      "name": "ueb-social-studio",
+      "source": {
+        "source": "local",
+        "path": "./social-kit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

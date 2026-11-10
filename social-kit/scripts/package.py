@@ -19,6 +19,8 @@ if source.is_file():
                      ("social-kit/previews/planche-explorations.png", "previews/planche-explorations.png"),
                      ("social-kit/BRIEF-CHATGPT.md", "BRIEF-CHATGPT.md")]:
         charte = charte.replace(f"]({old})", f"]({new})")
+    for name in ("REGLES-CREATION.md", "INSTALLATION-CHATGPT.md"):
+        charte = charte.replace(f"](social-kit/{name})", f"]({name})")
     (ROOT / "CHARTE.md").write_text(charte)
 
 report = json.loads((ROOT / "previews/render-check.json").read_text())

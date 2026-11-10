@@ -8,6 +8,8 @@ Ce document se transmet à une personne chargée de la communication, un graphis
 
 La proposition v02 explore aussi la [photo et le blason comme matières de fond](previews/planche-explorations.png). Elle allège les signatures répétées pour donner davantage de place aux images et aux informations lisibles sur téléphone.
 
+Pour créer de nouveaux sujets, appliquer les [règles générales de création](REGLES-CREATION.md). Le [plugin UEB — Atelier communication](INSTALLATION-CHATGPT.md) associe ces principes aux ressources et à une procédure de fabrication ; ses sept templates sont des points de départ.
+
 ## 1. L’identité à faire reconnaître
 
 **Uccle Europe Basketball**, ou **UEB** après une première mention explicite, est un club de basket ancré à Uccle, à Bruxelles, **depuis 1946**. Sa communication associe le jeu, la progression des joueurs et le collectif : joueurs, familles, entraîneurs, bénévoles et partenaires.

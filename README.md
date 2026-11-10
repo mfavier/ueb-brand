@@ -20,6 +20,12 @@ decorative crest crops and a lighter player portrait layout while removing
 repeated small header/footer text. Start with the [visual board](social-kit/previews/planche-feed.png)
 and the [visual explorations](social-kit/previews/planche-explorations.png).
 
+The kit is also the source of the **UEB — Atelier communication** ChatGPT plugin:
+[installation](social-kit/INSTALLATION-CHATGPT.md),
+[general creative rules](social-kit/REGLES-CREATION.md), and
+[skill entry point](social-kit/skills/ueb-social-posts/SKILL.md).
+The repo-local marketplace exposes `./social-kit` for installation and testing.
+
 ## Why
 
 The `club.*` palette and the `:root` theme variables used to be copy-pasted across

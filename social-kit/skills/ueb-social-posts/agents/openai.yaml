@@ -1,0 +1,5 @@
+interface:
+  display_name: "UEB — Création de posts"
+  short_description: "Des publications UEB lisibles et cohérentes."
+  brand_color: "#3448A1"
+  default_prompt: "Utilise $ueb-social-posts pour créer une publication UEB à partir de mes informations et des fichiers joints."

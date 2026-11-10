@@ -1,5 +1,7 @@
 # UEB — Kit de templates sociaux, proposition 02
 
+Le kit fournit aussi le [plugin UEB — Atelier communication](INSTALLATION-CHATGPT.md), ses [règles générales](REGLES-CREATION.md) et sa [skill](skills/ueb-social-posts/SKILL.md). Les nouveaux sujets se composent à partir de ces principes ; les modèles ci-dessous servent de points de départ.
+
 Sept rendez-vous éditoriaux, une même famille graphique. La proposition v02 traduit la charte publique 2026 en compositions réutilisables, avec leurs exemples et leurs fichiers sources. Elle développe la matière photo et le blason en fond, allège les signatures répétées et donne plus de place aux informations utiles.
 
 **Commencer par la [planche d’ensemble](previews/planche-feed.png)**, puis ouvrir les exemples à taille réelle. Le [catalogue local](previews/index.html) s’ouvre dans un navigateur, sans serveur ni connexion.

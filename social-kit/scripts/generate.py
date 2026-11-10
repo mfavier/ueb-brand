@@ -5,6 +5,7 @@ import base64
 import hashlib
 import html
 import json
+import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -283,33 +284,178 @@ class Poster:
                 + "\n".join(self.parts) + "</svg>\n")
 
 
-def validate(key, d):
-    if key not in NAMES:
-        raise ValueError(f"Template inconnu : {key}")
+def validate(key, d, production=False):
+    """Validate user data before layout so missing/type errors remain actionable."""
+    if not isinstance(d, dict):
+        raise ValueError("Le fichier de données doit contenir un objet JSON, pas une liste ou une valeur isolée.")
+    if not isinstance(key, str) or key not in NAMES:
+        raise ValueError("template : renseigner une rubrique connue parmi " + ", ".join(NAMES) + ".")
+    if "template" in d and d["template"] != key:
+        raise ValueError(f"template : la rubrique attendue est {key}.")
+
+    def required(obj, name, prefix=""):
+        path = f"{prefix}.{name}" if prefix else name
+        if name not in obj:
+            raise ValueError(f"{path} : champ obligatoire manquant pour {NAMES[key]}.")
+        return obj[name], path
+
+    def text(obj, name, prefix="", allow_empty=False):
+        value, path = required(obj, name, prefix)
+        if not isinstance(value, str) or (not allow_empty and not value.strip()):
+            raise ValueError(f"{path} : fournir une chaîne de texte" + ("." if allow_empty else " non vide."))
+        return value
+
+    def lines(name, maximum=2):
+        value, path = required(d, name)
+        if not isinstance(value, list) or not 1 <= len(value) <= maximum:
+            raise ValueError(f"{path} : fournir une liste de 1 à {maximum} ligne(s) de texte.")
+        for index, line in enumerate(value):
+            if not isinstance(line, str) or not line.strip():
+                raise ValueError(f"{path}[{index}] : fournir une chaîne de texte non vide.")
+
+    def scalar(obj, name, prefix="", integer=False):
+        value, path = required(obj, name, prefix)
+        number = isinstance(value, (int, float)) and not isinstance(value, bool)
+        if isinstance(value, str) and value.strip():
+            return value
+        if number and math.isfinite(value) and (not integer or isinstance(value, int)):
+            return value
+        raise ValueError(f"{path} : fournir du texte non vide ou un nombre" + (" entier." if integer else " fini."))
+
+    for name in ("alt", "footer", "photoCaption"):
+        if name in d:
+            text(d, name, allow_empty=True)
+    if "demo" in d and not isinstance(d["demo"], bool):
+        raise ValueError("demo : fournir le booléen JSON true ou false, pas 0, une chaîne ou null.")
+    if production and d.get("demo") is not False:
+        raise ValueError("demo : pour un post réel, renseigner exactement false après vérification des données.")
+
+    for name in ("logo", "photo", "portrait", "backgroundPhoto"):
+        value = d.get(name)
+        if value is None:
+            continue
+        if not isinstance(value, str):
+            raise ValueError(f"{name} : fournir un chemin de fichier local ou null.")
+        if not value:
+            continue
+        path = (ROOT / value).resolve()
+        if path.suffix.lower() not in (".svg", ".jpg", ".jpeg", ".png"):
+            raise ValueError(f"{name} : format non pris en charge ; utiliser SVG, JPEG ou PNG.")
+        if not path.is_file():
+            raise ValueError(f"{name} : fichier local absent : {value}")
+
+    for name, choices in (("backgroundStyle", ("plain", "crest")),
+                          ("surface", ("white", "paper", "sky")),
+                          ("variant", ("light", "dark"))):
+        if name in d and (not isinstance(d[name], str) or d[name] not in choices):
+            raise ValueError(f"{name} : choisir " + " ou ".join(choices) + ".")
+    if "crest" in d:
+        spec = d["crest"]
+        if not isinstance(spec, dict):
+            raise ValueError("crest : fournir un objet de réglages du blason décoratif.")
+        unknown = set(spec) - {"x", "y", "width", "opacity", "color"}
+        if unknown:
+            raise ValueError("crest : réglage inconnu : " + ", ".join(sorted(unknown)) + ".")
+        for name in ("x", "y", "width", "opacity"):
+            if name in spec:
+                value = spec[name]
+                if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
+                    raise ValueError(f"crest.{name} : fournir un nombre fini.")
+        if "width" in spec and spec["width"] <= 0:
+            raise ValueError("crest.width : fournir une largeur strictement positive.")
+        if "opacity" in spec and not 0 <= spec["opacity"] <= 1:
+            raise ValueError("crest.opacity : fournir un nombre de 0 à 1.")
+        if "color" in spec and spec["color"] not in ("night", "blue", "white"):
+            raise ValueError("crest.color : choisir night, blue ou white.")
+
+    if key != "03-partenaire":
+        text(d, "edition")
     if key in ("01-resultats", "02-programme"):
-        if not 1 <= len(d["matches"]) <= 4:
-            raise ValueError("Prévoir de 1 à 4 matchs par visuel ; créer une seconde diapositive au-delà.")
-    for name in ("name", "subject"):
-        if name in d and len(d[name]) > 2:
-            raise ValueError(f"{name} : deux lignes maximum, utiliser la légende pour le reste.")
-    if key == "04-player-of-the-week" and len(d["stats"]) != 3:
-        raise ValueError("Prévoir exactement trois repères pour le joueur.")
-    if key == "05-annonce-officielle" and len(d["body"]) > 3:
-        raise ValueError("Trois lignes de corps maximum ; joindre un texte séparé pour le communiqué complet.")
-    if key == "06-communication" and len(d["details"]) > 2:
-        raise ValueError("Deux lignes de détails maximum.")
-    if key == "07-score-final":
-        for side in ("home", "away"):
-            if not 1 <= len(d[side]) <= 2:
-                raise ValueError("Un nom d’équipe occupe une à deux lignes.")
-        for score in ("homeScore", "awayScore"):
-            val = str(d[score])
-            if not (val.isdigit() and 0 <= int(val) <= 999) and val != "—":
-                raise ValueError("Score : entier de 0 à 999, ou tiret pour le modèle vierge.")
+        matches, path = required(d, "matches")
+        if not isinstance(matches, list) or not 1 <= len(matches) <= 4:
+            raise ValueError("matches : fournir de 1 à 4 matchs ; créer une seconde diapositive au-delà.")
+        fields = ("category", "home", "away", "score") if key == "01-resultats" else (
+            "day", "category", "opponent", "venue", "side", "time")
+        for index, row in enumerate(matches):
+            prefix = f"matches[{index}]"
+            if not isinstance(row, dict):
+                raise ValueError(f"{prefix} : chaque match doit être un objet JSON.")
+            for name in fields:
+                text(row, name, prefix)
+    elif key == "03-partenaire":
+        if "name" in d or not d.get("logo"):
+            lines("name")
+        lines("contribution")
+        text(d, "season")
+    elif key == "04-player-of-the-week":
+        lines("name")
+        text(d, "category")
+        scalar(d, "number", integer=True)
+        stats, path = required(d, "stats")
+        if not isinstance(stats, list) or len(stats) != 3:
+            raise ValueError("stats : fournir exactement trois repères pour le joueur.")
+        for index, stat in enumerate(stats):
+            prefix = f"stats[{index}]"
+            if not isinstance(stat, dict):
+                raise ValueError(f"{prefix} : chaque repère doit être un objet JSON.")
+            scalar(stat, "value", prefix)
+            text(stat, "label", prefix)
+        if production and d.get("portrait"):
+            path = (ROOT / d["portrait"]).resolve()
+            illustrative = ROOT / "assets/photos/portrait-illustratif-adulte.png"
+            same_path = path == illustrative.resolve()
+            same_bytes = (illustrative.is_file() and
+                          hashlib.sha256(path.read_bytes()).digest() == hashlib.sha256(illustrative.read_bytes()).digest())
+            if same_path or same_bytes:
+                raise ValueError("portrait : le portrait illustratif de démonstration, y compris une copie identique, "
+                                 "ne peut pas identifier un joueur réel ; fournir son portrait autorisé ou null.")
+    elif key == "05-annonce-officielle":
+        lines("subject")
+        lines("body", maximum=3)
+        text(d, "signature")
+    elif key == "06-communication":
+        lines("subject")
+        text(d, "when")
+        lines("details")
+        text(d, "note", allow_empty=True)
+    elif key == "07-score-final":
+        lines("home")
+        lines("away")
+        for name in ("homeScore", "awayScore"):
+            value, path = required(d, name)
+            if not isinstance(value, (str, int)) or isinstance(value, bool):
+                raise ValueError(f"{path} : fournir un entier de 0 à 999.")
+            val = str(value)
+            if val == "—" and not production:
+                continue
+            if not val.isascii() or not val.isdigit() or not 0 <= int(val) <= 999:
+                raise ValueError(f"{path} : fournir un entier de 0 à 999" +
+                                 (" ; un score final réel ne peut pas être un tiret." if production else ", ou — pour le modèle vierge."))
+        if not (d.get("backgroundPhoto") or d.get("photo")):
+            lines("closing")
+
+    if production:
+        def placeholder(value, path="données"):
+            if isinstance(value, str) and ("[" in value or "]" in value or "ÀCONFIRMER" in "".join(value.upper().split())):
+                return path
+            if isinstance(value, dict):
+                for name, child in value.items():
+                    found = placeholder(child, f"{path}.{name}")
+                    if found:
+                        return found
+            if isinstance(value, list):
+                for index, child in enumerate(value):
+                    found = placeholder(child, f"{path}[{index}]")
+                    if found:
+                        return found
+            return None
+        incomplete = placeholder(d)
+        if incomplete:
+            raise ValueError(f"{incomplete} : un champ à compléter subsiste dans les données de production.")
 
 
 def single(key, data, dest, mode):
-    validate(key, data)
+    validate(key, data, production=mode == "production")
     dest.mkdir(parents=True, exist_ok=True)
     for story in (False, True):
         suffix = "story" if story else "feed"
@@ -348,20 +494,12 @@ def main():
     parser.add_argument("--out", type=Path, default=ROOT / "production")
     args = parser.parse_args()
     if args.data:
-        d = json.loads(args.data.read_text())
-        if d.get("demo", True):
-            raise ValueError("Pour un post réel, renseigner demo=false après vérification des données.")
-        def placeholders(v):
-            if isinstance(v, str):
-                return "[" in v or "À CONFIRMER" in v
-            if isinstance(v, dict):
-                return any(placeholders(x) for x in v.values())
-            if isinstance(v, list):
-                return any(placeholders(x) for x in v)
-            return False
-        if placeholders(d):
-            raise ValueError("Des champs à compléter subsistent dans les données.")
-        single(d["template"], d, args.out, "production")
+        try:
+            d = json.loads(args.data.read_text())
+            key = d.get("template") if isinstance(d, dict) else None
+            single(key, d, args.out, "production")
+        except (ValueError, OSError) as error:
+            parser.error(str(error))
         print(f"Deux SVG de production écrits dans {args.out}")
         return
     for key in NAMES:
