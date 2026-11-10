@@ -6,6 +6,8 @@ Préparation : 10 novembre 2026 · Proposition sociale v02. Les exemples sont de
 |---|---|---|
 | `ueb-logo.svg` | `ueb-brand/src/logos/uccle-europe.svg` | Copie exacte du fichier officiel. |
 | `ueb-logo.png` | Rendu du SVG ci-dessus, 886 × 1 000 px | Export transparent ; dessin et proportions conservés. |
+| `ueb-plugin-icon.svg` | Blason officiel intégré sans modification dans un canevas512×512 | Icône carrée de l’interface du plugin ; proportions du blason conservées avec une marge et un fond clair. |
+| `ueb-plugin-icon.png` | Rendu512×512 du SVG carré ci-dessus | Fichier PNG utilisé par les champs `composerIcon` et `logo` du manifeste de plugin. |
 | `photos/u16-champions-2025.jpg` | `ueb-public/public/redesign-2026/hero-u16-2025.jpg` | Photo d’archive publique du club, U16 champions de Belgique en 2025. Exemple de score fictif légendé comme tel. |
 | `photos/collectif-2025-2026.jpg` | `ueb-public/public/redesign-2026/collectif-2025-2026.jpg` | Photo d’archive du collectif, saison 2025–2026 ; fournie comme actif d’essai. |
 | `photos/portrait-illustratif-adulte.png` | Outil intégré imagegen ; [prompt et contexte](photos/PORTRAIT-ILLUSTRATIF.md) | Portrait fictif d’un adulte, fourni pour les exemples Player of the week. |

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a self-contained, compact UEB plugin and its repo-local marketplace."""
+"""Build one plugin ZIP for direct upload, or an explicitly selected local marketplace."""
 import argparse
 import hashlib
 import json
@@ -8,6 +8,7 @@ import sys
 import tempfile
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
+from validate_upload import validate_archive
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -33,7 +34,7 @@ def files_to_ship():
     for name in ("plugin.json", "CHARTE.md", "REGLES-CREATION.md", "BRIEF-CHATGPT.md",
                  "INSTALLATION-CHATGPT.md", "TESTS-ACCEPTATION.md",
                  "scripts/generate.py", "scripts/render.mjs", "scripts/validate_plugin.py",
-                 "scripts/package_plugin.py", "previews/index.html", "previews/explorations.html",
+                 "scripts/package_plugin.py", "scripts/validate_upload.py", "previews/index.html", "previews/explorations.html",
                  "previews/planche-feed.png", "previews/planche-explorations.png", "previews/lecture-mobile.png"):
         paths.add(ROOT / name)
     return sorted(p for p in paths if p.name != ".DS_Store" and "__pycache__" not in p.parts)
@@ -43,12 +44,20 @@ def main():
     meta = json.loads((ROOT / "plugin.json").read_text())
     name, version = meta["name"], meta["version"]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--out", type=Path, default=ROOT.parent / f"{name}-plugin-{version}.zip")
+    parser.add_argument("--layout", choices=("upload", "marketplace"), default="upload",
+                        help="upload : un plugin à la racine du ZIP ; marketplace : catalogue local avec sa source.")
+    parser.add_argument("--out", type=Path)
     args = parser.parse_args()
+    kind = "plugin" if args.layout == "upload" else "marketplace"
+    args.out = args.out or ROOT.parent / f"{name}-{kind}-{version}.zip"
     sync_charter()
     validator = ROOT / "scripts/validate_plugin.py"
     subprocess.run([sys.executable, str(validator)], check=True)
     files = files_to_ship()
+    if args.layout == "upload":
+        # A portable manifest is sufficient: exclude the repo's compatibility overlay
+        # and keep exactly one plugin directly at the ZIP root.
+        files = [p for p in files if ".codex-plugin" not in p.relative_to(ROOT).parts]
     for p in files:
         if not p.is_file():
             raise ValueError(f"Ressource manquante : {p.relative_to(ROOT)}")
@@ -61,7 +70,7 @@ def main():
     }
     runtime_readme = """# UEB — Atelier communication
 
-Source compacte du plugin, version 0.1.0. Les compositions complètes de revue restent dans le dépôt ueb-brand.
+Source compacte du plugin. Les compositions complètes de revue restent dans le dépôt ueb-brand.
 
 - [Installer dans ChatGPT](INSTALLATION-CHATGPT.md).
 - [Règles générales de création](REGLES-CREATION.md).
@@ -85,28 +94,36 @@ L’archive est une source de plugin à installer et tester ; elle n’atteste p
 """
     shipped = [{"file": str(p.relative_to(ROOT)), "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in files]
     delivery = {"name": name, "version": version, "kind": "skills-only", "files": shipped,
+                "archive_layout": args.layout,
                 "validation": "static structure and local scripts; target ChatGPT conversation still to test"}
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(args.out, "w", compression=ZIP_DEFLATED, compresslevel=9) as archive:
         for p in files:
-            archive.write(p, outer / "social-kit" / p.relative_to(ROOT))
-        archive.writestr(str(outer / ".agents/plugins/marketplace.json"), json.dumps(catalogue, ensure_ascii=False, indent=2) + "\n")
-        archive.writestr(str(outer / "social-kit/README.md"), runtime_readme)
-        archive.writestr(str(outer / "README.md"), top_readme)
-        archive.writestr(str(outer / "delivery.json"), json.dumps(delivery, ensure_ascii=False, indent=2) + "\n")
+            relative = p.relative_to(ROOT)
+            archive.write(p, relative if args.layout == "upload" else outer / "social-kit" / relative)
+        if args.layout == "upload":
+            archive.writestr("README.md", runtime_readme)
+            archive.writestr("delivery.json", json.dumps(delivery, ensure_ascii=False, indent=2) + "\n")
+        else:
+            archive.writestr(str(outer / ".agents/plugins/marketplace.json"), json.dumps(catalogue, ensure_ascii=False, indent=2) + "\n")
+            archive.writestr(str(outer / "social-kit/README.md"), runtime_readme)
+            archive.writestr(str(outer / "README.md"), top_readme)
+            archive.writestr(str(outer / "delivery.json"), json.dumps(delivery, ensure_ascii=False, indent=2) + "\n")
+    if args.layout == "upload":
+        validate_archive(args.out)
     # Validate the delivered tree, not just the checkout used to assemble it.
     with tempfile.TemporaryDirectory(prefix="ueb-plugin-delivery-") as temp:
         with ZipFile(args.out) as archive:
             if archive.testzip() is not None:
                 raise ValueError("Archive endommagée.")
             archive.extractall(temp)
-        delivered = Path(temp) / outer / "social-kit"
+        delivered = Path(temp) if args.layout == "upload" else Path(temp) / outer / "social-kit"
         subprocess.run([sys.executable, str(delivered / "scripts/validate_plugin.py"), "--root", str(delivered)], check=True)
         for item in shipped:
             actual = hashlib.sha256((delivered / item["file"]).read_bytes()).hexdigest()
             if actual != item["sha256"]:
                 raise ValueError(f"Empreinte incohérente : {item['file']}")
-    print(json.dumps({"archive": str(args.out), "files": len(files) + 4,
+    print(json.dumps({"archive": str(args.out), "layout": args.layout, "files": len(files) + (2 if args.layout == "upload" else 4),
                       "sizeMiB": round(args.out.stat().st_size / 1024 / 1024, 1),
                       "status": "source packaged and local checks passed; not installed in ChatGPT"}, ensure_ascii=False))
 

@@ -3,4 +3,5 @@ node_modules
 .DS_Store
 /ueb-social-kit-*.zip
 /ueb-social-studio-plugin-*.zip
+/ueb-social-studio-marketplace-*.zip
 __pycache__/

@@ -1,19 +1,31 @@
 # UEB — Installer l’Atelier communication
 
-Le kit est maintenant la source du plugin **UEB — Atelier communication**, identifié par `ueb-social-studio`, version `0.1.0`. Il regroupe la skill, les règles générales, les compositions de départ, les exemples, les fichiers de marque et le moteur SVG.
+Le kit est la source du plugin **UEB — Atelier communication**, identifié par `ueb-social-studio`, version `0.1.1`. Il regroupe la skill, les règles générales, les compositions de départ, les exemples, les fichiers de marque et le moteur SVG.
 
 La base graphique est suffisante pour commencer. Pour chaque publication réelle, il reste à fournir les faits et les actifs du sujet : équipes, score, date, salle, portrait, contribution ou logo du partenaire selon la demande. Les exemples fictifs ne sont pas une source de données réelles.
 
 Les règles générales permettent d’adapter la composition à un nouveau sujet. Les sept templates ne définissent pas une liste fermée de publications. Le plugin ne contient pas de connecteur de diffusion et les outils d’export dépendent de la session : un PNG indisponible doit être annoncé comme tel.
 
-## Créer le plugin dans ChatGPT
+## Ajouter le plugin dans ChatGPT
 
-Lorsque la création de plugins est disponible dans l’espace de travail, sélectionner **Plugin Creator** avec `@` dans Chat ou Work, joindre l’archive `ueb-social-studio-plugin-0.1.0.zip`, puis transmettre ce brief. Suivre ensuite le flux de création proposé et tester dans une nouvelle conversation. [Guide officiel OpenAI](https://learn.chatgpt.com/docs/build-plugins).
+Dans la fenêtre **Nouveau plugin** :
+
+1. Cliquer sur **Choisir un fichier**.
+2. Sélectionner **`ueb-social-studio-plugin-0.1.1.zip`**.
+3. Cliquer sur **Ajouter**, puis suivre les indications affichées.
+
+**Garder le ZIP fermé : ne pas le décompresser pour cet ajout.** Cette archive contient un seul plugin, avec `plugin.json` directement à sa racine et les dossiers `skills/`, `assets/`, `scripts/` ainsi que les documents à côté. Elle n’inclut pas le catalogue de marketplace.
+
+La version `0.1.0` remise précédemment était organisée comme une marketplace : le plugin était imbriqué dans un dossier accompagné du catalogue et d’autres fichiers. Cette organisation était inadaptée à l’import direct qui a retourné « Expected a single plugin archive ». La version `0.1.1` corrige l’organisation du ZIP. La documentation officielle demande une racine de plugin unique, située à la racine du ZIP ou dans un seul dossier de premier niveau, sans fichiers frères dans ce second cas. [Référence OpenAI des erreurs d’archive](https://developers.openai.com/plugins/deploy/submission-errors).
+
+## Alternative avec Plugin Creator
+
+Si la création passe par une conversation avec **Plugin Creator**, le sélectionner avec `@`, joindre **la même archive `ueb-social-studio-plugin-0.1.1.zip`**, puis transmettre ce brief. [Guide officiel OpenAI](https://learn.chatgpt.com/docs/build-plugins).
 
 ```text
 Crée un plugin privé « UEB — Atelier communication » avec l’archive jointe.
-Le plugin source est dans social-kit/plugin.json et sa skill dans
-social-kit/skills/ueb-social-posts/SKILL.md.
+Le ZIP contient plugin.json directement à sa racine. La skill est dans
+skills/ueb-social-posts/SKILL.md, à partir de cette même racine.
 
 Conserve les règles générales, la charte, les références et les actifs de marque.
 Le plugin doit choisir ou adapter une composition selon la demande, demander
@@ -25,7 +37,7 @@ Ne connecte aucun service externe et ne publie aucun post. Prépare les fichiers
 le texte et le texte alternatif, puis fais-moi tester les scénarios de recette.
 ```
 
-L’archive sert à importer la source. Sa simple présence en pièce jointe ne prouve pas que le plugin est créé ou installé.
+L’archive sert à importer la source. Sa présence en pièce jointe, comme les contrôles locaux du ZIP, ne prouve pas que l’ajout côté ChatGPT a réussi.
 
 ## Installer la source locale dans l’application de bureau
 
@@ -37,7 +49,14 @@ codex plugin marketplace add /chemin/vers/ueb-brand
 
 Redémarrer ou actualiser l’application, ouvrir le répertoire des plugins, choisir la source **Uccle Europe — Communication**, puis installer **UEB — Atelier communication**. Le catalogue prépare la découverte ; il ne constitue pas une installation automatique. [Format et installation locale documentés par OpenAI](https://developers.openai.com/plugins/build/plugins).
 
-Sur une autre machine, décompresser l’archive et enregistrer sa racine de la même façon. Elle contient son propre catalogue et le dossier `social-kit`, sans chemin propre à l’ordinateur de préparation. Ne pas écraser une marketplace personnelle existante.
+Sur une autre machine, utiliser **`ueb-social-studio-marketplace-0.1.1.zip`** pour cette installation locale. Décompresser cette archive, puis enregistrer le dossier qui contient à la fois `.agents/` et `social-kit/`. Ce format conserve son catalogue et sa source locale, sans chemin propre à l’ordinateur de préparation. Ne pas écraser une marketplace personnelle existante.
+
+| Archive | Destination |
+|---|---|
+| `ueb-social-studio-plugin-0.1.1.zip` | Bouton **Choisir un fichier** dans ChatGPT, ou pièce jointe pour Plugin Creator. |
+| `ueb-social-studio-marketplace-0.1.1.zip` | Décompression puis enregistrement comme marketplace locale pour la CLI et l’application de bureau. |
+
+Le paquet de marketplace se fabrique avec `python3 scripts/package_plugin.py --layout marketplace` depuis `social-kit`. Le ZIP destiné à l’import direct est produit par défaut, sans cette option. Ne pas envoyer l’archive marketplace dans la fenêtre d’ajout direct d’un plugin.
 
 L’archive d’installation contient une sélection compacte des ressources utiles à la skill. La bibliothèque complète de revue reste dans le dépôt et dans l’archive intégrale du kit. Les commandes de production de la skill utilisent cette sélection ; régénérer toutes les planches depuis le dépôt complet.
 

@@ -10,6 +10,7 @@ import shutil
 import sys
 import tempfile
 import xml.etree.ElementTree as ET
+import struct
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
@@ -76,12 +77,23 @@ def manifest_checks(v):
     if v.check(isinstance(interface, dict) and bool(interface), "Interface OpenAI absente du manifeste."):
         for key in ("displayName", "shortDescription", "developerName"):
             v.check(isinstance(interface.get(key), str) and bool(interface[key].strip()), f"Interface : {key} absent.")
+        v.check(isinstance(interface.get("shortDescription"), str) and len(interface["shortDescription"]) <= 30,
+                "Interface : shortDescription doit contenir au plus30caractères.")
         for key in ("composerIcon", "logo"):
             value = interface.get(key)
             if v.check(isinstance(value, str) and value.startswith("./assets/"), f"Interface : {key} doit référencer ./assets/."):
                 path = v.local(value)
                 if path:
                     v.check(path.is_file(), f"Interface : {key} doit référencer un fichier.")
+                    if path.is_file() and path.suffix.lower() == ".svg":
+                        svg = ET.parse(path).getroot()
+                        box = [float(x) for x in svg.get("viewBox", "").split()]
+                        v.check(len(box) == 4 and box[2] == box[3] and box[2] >= 48,
+                                f"Interface : {key} doit être une image carrée d’au moins48×48.")
+                    elif path.is_file() and path.suffix.lower() == ".png":
+                        width, height = struct.unpack(">II", path.read_bytes()[16:24])
+                        v.check(width == height and 48 <= width <= 4096,
+                                f"Interface : {key} doit être un PNG carré entre48et4096px.")
         prompts = interface.get("defaultPrompt")
         v.check(isinstance(prompts, list) and bool(prompts) and all(isinstance(p, str) and p.strip() for p in prompts), "Interface : defaultPrompt doit être une liste de textes non vides.")
 
