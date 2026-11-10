@@ -25,7 +25,10 @@ def main():
     files = {}
     for name in ("poster-engine.js", "poster-engine.d.ts"):
         files[ROOT / "browser" / name] = manager / "src/vendor/ueb-social" / name
-    asset_names = ["ueb-logo.svg", "ueb-logo.png", "PROVENANCE.md"]
+    # The full kit provenance references illustrative photos that are excluded
+    # from production. Ship the dedicated portable production notice instead.
+    files[ROOT / "browser/ASSET-PROVENANCE.md"] = manager / "public/social-posts/assets/PROVENANCE.md"
+    asset_names = ["ueb-logo.svg", "ueb-logo.png"]
     asset_names += [str(path.relative_to(ROOT / "assets")) for folder in ("fonts", "decorative")
                     for path in sorted((ROOT / "assets" / folder).iterdir())
                     if path.is_file() and path.name != "preview.png"]
