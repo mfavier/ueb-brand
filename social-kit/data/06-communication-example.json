@@ -1,5 +1,5 @@
 {
-  "edition": "VIE DU CLUB · INFORMATION PRATIQUE",
+  "edition": "VIE DU CLUB",
   "subject": [
     "ENTRAÎNEMENT",
     "DÉPLACÉ."
@@ -9,7 +9,7 @@
     "U14 A · 18:00",
     "Salle d’entraînement B · Uccle"
   ],
-  "note": "Le rendez-vous concerne uniquement les U14 A.",
+  "note": "Pour le groupe U14 A uniquement.",
   "alt": "Information entièrement fictive : déplacement d’un entraînement U14 A le mercredi 18 novembre 2026 à 18 heures.",
   "template": "06-communication",
   "demo": true

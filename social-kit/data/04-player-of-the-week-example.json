@@ -1,12 +1,12 @@
 {
-  "edition": "SEMAINE DU 9 NOVEMBRE 2026",
-  "category": "U18 A · ARRIÈRE",
+  "edition": "9–15 NOVEMBRE 2026",
+  "category": "SENIORS · ARRIÈRE",
   "name": [
     "ALEX",
     "MARTIN."
   ],
   "number": "12",
-  "portrait": null,
+  "portrait": "assets/photos/portrait-illustratif-adulte.png",
   "stats": [
     {
       "value": "24",
@@ -21,7 +21,8 @@
       "label": "PASSES"
     }
   ],
-  "alt": "Joueur et statistiques fictifs : Alex Martin, numéro 12, 24 points, 8 rebonds et 5 passes. Exemple sans portrait.",
+  "alt": "Exemple fictif : portrait illustratif généré d’un adulte, nom Alex Martin et statistiques inventés pour montrer la composition claire.",
   "template": "04-player-of-the-week",
-  "demo": true
+  "demo": true,
+  "variant": "light"
 }

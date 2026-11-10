@@ -1,0 +1,38 @@
+[
+  {
+    "id": "01-programme-blason-clair",
+    "label": "Programme · blason bleu nuit sur blanc",
+    "source": "02-programme-example.json",
+    "overrides": {"surface": "white", "crest": {"x": 680, "y": -190, "width": 1060, "opacity": 0.2}}
+  },
+  {
+    "id": "02-player-clair-photo",
+    "label": "Player of the week · photo claire",
+    "source": "04-player-of-the-week-example.json",
+    "overrides": {"variant": "light"}
+  },
+  {
+    "id": "03-player-clair-blason",
+    "label": "Player of the week · blason sur fond clair",
+    "source": "04-player-of-the-week-example.json",
+    "overrides": {"variant": "light", "portrait": null}
+  },
+  {
+    "id": "04-player-sombre-photo",
+    "label": "Player of the week · contraste sombre et photo claire",
+    "source": "04-player-of-the-week-example.json",
+    "overrides": {"variant": "dark"}
+  },
+  {
+    "id": "05-score-photo",
+    "label": "Score final · photographie du collectif",
+    "source": "07-score-final-example.json",
+    "overrides": {}
+  },
+  {
+    "id": "06-score-blason",
+    "label": "Score final · blason monochrome partiel",
+    "source": "07-score-final-example.json",
+    "overrides": {"photo": null, "backgroundPhoto": null, "photoCaption": ""}
+  }
+]

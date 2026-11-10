@@ -12,7 +12,7 @@ const { chromium } = await import(moduleName ? pathToFileURL(path.resolve(module
 const browser = await chromium.launch({ headless: true });
 const report = [];
 const target = process.argv[2];
-const directories = target ? [path.resolve(target)] : ['examples', 'templates'].map(dir => path.join(root, dir));
+const directories = target ? [path.resolve(target)] : ['examples', 'templates', 'explorations'].map(dir => path.join(root, dir));
 try {
   for (const dir of directories) {
     for (const name of (await fs.readdir(dir)).filter(name => name.endsWith('.svg')).sort()) {
@@ -81,6 +81,11 @@ try {
     await storiesPage.evaluate(async () => { await document.fonts.ready; await Promise.all([...document.images].map(i => i.decode())); });
     await storiesPage.screenshot({ path: path.join(root, 'previews/planche-stories.png'), fullPage: true });
     await storiesPage.close();
+    const explorationsPage = await browser.newPage({ viewport: { width: 1760, height: 1920 }, deviceScaleFactor: 1 });
+    await explorationsPage.goto(pathToFileURL(path.join(root, 'previews/explorations.html')).href);
+    await explorationsPage.evaluate(async () => { await document.fonts.ready; await Promise.all([...document.images].map(i => i.decode())); });
+    await explorationsPage.screenshot({ path: path.join(root, 'previews/planche-explorations.png'), fullPage: true });
+    await explorationsPage.close();
     const logoPage = await browser.newPage({ viewport: { width: 886, height: 1000 }, deviceScaleFactor: 1 });
     const logo = await fs.readFile(path.join(root, 'assets/ueb-logo.svg'), 'utf8');
     await logoPage.setContent(`<html><style>body{margin:0}svg{display:block;width:886px;height:1000px}</style>${logo}</html>`);

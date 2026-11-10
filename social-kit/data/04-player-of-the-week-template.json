@@ -23,5 +23,6 @@
   ],
   "template": "04-player-of-the-week",
   "demo": true,
-  "alt": "Modèle de composition à compléter : 04-player-of-the-week"
+  "alt": "Modèle de composition à compléter : 04-player-of-the-week",
+  "variant": "light"
 }

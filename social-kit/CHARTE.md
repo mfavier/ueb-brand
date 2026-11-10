@@ -1,10 +1,12 @@
 # Uccle Europe Basketball — Instructions de création des posts
 
-Version 1.0 · 10 novembre 2026 · Référence visuelle : nouveau site `ueb-public`, identité publique 2026.
+Version 1.1 · 10 novembre 2026 · Référence visuelle : nouveau site `ueb-public`, identité publique 2026 · Déclinaison sociale v02.
 
 Ce document se transmet à une personne chargée de la communication, un graphiste ou un assistant IA. Il contient les instructions pour fabriquer les visuels et les textes Instagram, WhatsApp, Facebook et LinkedIn d’Uccle Europe Basketball. Les couleurs, les polices, les signatures et la direction visuelle viennent du nouveau site. Les formats, marges, tailles de texte et gabarits sociaux sont des **conventions de fabrication définies dans ce guide** pour décliner cette identité ; ils ne sont pas présentés comme une charte sociale antérieurement validée.
 
 **Pour produire à partir d’une composition existante**, utiliser le [kit de templates et d’exemples](README.md), sa [planche visuelle](previews/planche-feed.png) et son [brief d’exécution ChatGPT](BRIEF-CHATGPT.md). Cette proposition décline les sept rubriques récurrentes du club ; ses exemples portent des données fictives. Le modèle choisi fixe la composition à conserver.
+
+La proposition v02 explore aussi la [photo et le blason comme matières de fond](previews/planche-explorations.png). Elle allège les signatures répétées pour donner davantage de place aux images et aux informations lisibles sur téléphone.
 
 ## 1. L’identité à faire reconnaître
 
@@ -18,7 +20,7 @@ La signature du nouveau site est :
 
 Conserver ces mots, cet ordre, les accents et les points quand la signature est utilisée. Elle peut apparaître en trois lignes. Elle n’est pas obligatoire sur chaque post.
 
-Repère d’ancrage : **Uccle · Bruxelles · Depuis 1946**. Sur une création en anglais, « Since 1946 » peut remplacer « Depuis 1946 ». Ne pas ajouter ces mentions dans le fichier du blason lui-même.
+Repère d’ancrage disponible : **Uccle · Bruxelles · Depuis 1946**. Sur une création en anglais, « Since 1946 » peut remplacer « Depuis 1946 ». Réserver ces mentions aux sujets où elles apportent du sens ; elles ne forment pas un micro-en-tête obligatoire sur les posts. Ne pas les ajouter dans le fichier du blason lui-même.
 
 L’expression doit être sportive, affirmée, humaine et accueillante. Montrer le basket vécu, l’effort, la formation et le plaisir de faire équipe. Les valeurs du club sont la solidarité, le respect, le travail, la discipline, la combativité, le dépassement de soi, le fair-play et la convivialité.
 
@@ -61,7 +63,7 @@ Ces rapports concernent les aplats opaques. Sur une photo, placer le texte sur u
 
 Le package `@ueb/brand` v0.4.0 conserve notamment `#39458E`, `#A7CDE4`, `#CBA165`, `#FCFAF6` et `#F2EDE5`. Le nouveau site possède aussi des classes historiques `club.*`. **Ces valeurs ne sont pas la palette publique 2026 à appliquer aux posts de ce guide.** La référence de ces posts est la palette `ueb.*` du nouveau site, reprise dans le tableau ci-dessus.
 
-Le blason officiel conserve ses propres couleurs d’origine. Cette différence avec les aplats publics est normale : ne pas le recolorer pour les uniformiser.
+Le blason officiel conserve ses propres couleurs d’origine. Cette différence avec les aplats publics est normale. Les versions monochromes destinées aux fonds sont des dérivés décoratifs séparés, décrits en section 4 ; elles ne remplacent pas le fichier officiel.
 
 ## 3. Typographie : Kanit et DM Sans
 
@@ -79,8 +81,9 @@ Le package technique prévoit aussi **DM Mono** pour les statistiques. La paire 
 Conventions pour un visuel de **1 080 px de large** :
 
 - Accroche : 88 à 120 px, interligne de 0,95 à 1,05 fois la taille ; augmenter la zone de titre si nécessaire pour préserver les accents.
-- Sous-titre : 48 à 64 px ; informations pratiques : 36 à 44 px.
-- Petit repère ou signature : 28 à 32 px. Aucune information indispensable sous 32 px.
+- Sous-titre : 48 à 64 px ; informations utiles des programmes et résultats : environ 44 à 52 px ; heures et scores : environ 64 à 88 px selon la rubrique.
+- Viser une lecture directe à 360 px de large, sans zoom. Si l’espace manque, répartir le contenu sur plusieurs diapositives plutôt que réduire les informations utiles.
+- Supprimer les microtextes d’habillage : numéro de rubrique, slogan ou « Since 1946 » répétés, URL systématique et petites signatures de haut et bas. Une URL reste possible lorsqu’elle est l’information ou l’action du post.
 - Repères courts en capitales, espacement des lettres modéré, autour de `0,10 em`. Titres légèrement resserrés, entre `−0,02 em` et `0`.
 - Conserver les proportions lors d’un changement de résolution. À la taille d’affichage d’un téléphone, tout doit rester lisible sans zoom.
 
@@ -92,11 +95,11 @@ Le fichier officiel est **[`src/logos/uccle-europe.svg`](assets/ueb-logo.svg)** 
 
 Pour une personne qui reçoit uniquement ce Markdown : [ouvrir le blason officiel](https://github.com/mfavier/ueb-brand/blob/c4f4c3d7ca04ba2c3fed4463192711c0adba6ed1/src/logos/uccle-europe.svg) ou [récupérer le SVG brut](https://raw.githubusercontent.com/mfavier/ueb-brand/c4f4c3d7ca04ba2c3fed4463192711c0adba6ed1/src/logos/uccle-europe.svg). Si l’accès au dépôt est restreint, demander ce fichier à la personne qui transmet le guide.
 
-- Importer le SVG officiel, entier et dans ses proportions. Son format est vertical ; ne pas le forcer dans un carré en l’étirant.
-- Ne pas redessiner, recolorer, découper, incliner ou générer le blason avec une IA. Garder son contour, ses étoiles, son ballon et ses inscriptions.
-- Sur chaque visuel autonome, prévoir le blason et un nom lisible « Uccle Europe » ou « Uccle Europe Basketball ». Une simple photo publiée sans habillage peut être identifiée par sa légende et le compte du club.
-- Convention à 1 080 px de large : blason de 110 à 140 px de haut, avec un espace libre d’au moins un quart de sa hauteur autour de lui. Conserver un emplacement stable dans une série.
-- Poser le blason directement sur un aplat calme. Éviter le cartouche carré automatique, les ombres décoratives et la pose sur une zone photographique chargée.
+- **Blason identifiant** : importer le SVG officiel entier, dans ses couleurs et proportions. Son format est vertical ; ne pas le forcer dans un carré en l’étirant. Garder son contour, ses étoiles, son ballon et ses inscriptions.
+- **Blason décoratif** : le retour utilisateur sur v02 autorise expressément un dérivé monochrome et un cadrage partiel en fond. Employer les fichiers décoratifs fournis, issus des tracés officiels, en bleu nuit, bleu UEB ou blanc. Préserver le fichier officiel séparément et ne pas générer un nouveau dessin avec une IA.
+- La marque de fond peut déborder du canevas ou apparaître en partie ; ne pas reconstruire un blason identifiant à partir de ce fragment. Conserver ses proportions et une densité compatible avec la lecture des informations placées devant.
+- Prévoir **une signature club simple et lisible** : blason officiel entier, ou matière décorative de blason selon la variante retenue. Un nom de club de taille lisible peut accompagner la matière de fond, comme sur la fiche joueur. Éviter d’y ajouter un petit logo, « Depuis 1946 », un slogan, un numéro de rubrique et une URL. Le nom peut aussi rester dans le compte et la légende.
+- Pour un blason identifiant isolé, conserver un espace libre d’au moins un quart de sa hauteur autour de lui et un emplacement stable dans la série. Poser la marque sur une zone calme ; éviter le cartouche carré automatique et les ombres décoratives.
 - Garder les logos partenaires dans leurs fichiers et couleurs officiels, avec une taille optique équilibrée et une respiration propre. Leur présence dépend du sujet et des engagements communiqués dans le brief.
 
 Si le fichier officiel manque, préparer la composition avec un emplacement de travail clairement signalé. Ne pas livrer ce remplacement comme un logo final.
@@ -112,7 +115,9 @@ Conventions de construction :
 3. Une marge intérieure d’au moins **72 px** à gauche et à droite sur un format de 1 080 px de large ; espacer les blocs de 24 à 48 px.
 4. Deux zones franches suffisent : une zone de texte sur aplat et une photo. En portrait, préférer l’empilement ; ne pas réduire une capture du site pour en faire un post.
 5. Garder une partie du visuel libre. Déplacer les précisions dans la légende ou dans une autre diapositive plutôt que réduire la police.
-6. Utiliser les petits filets, bandeaux et repères typographiques du site avec sobriété. Limiter les flèches décoratives, les pictogrammes et les cadres imbriqués.
+6. Réserver les filets et bandeaux à une séparation ou une information utile. Supprimer les en-têtes et pieds de page d’habillage qui obligent à réduire le contenu.
+
+Une photo peut occuper le fond, avec une zone de texte calme ou un aplat de lecture. Le blason décoratif peut aussi apporter de la matière sur une fiche claire. Éviter de superposer photo chargée, grand blason et texte dense dans la même zone. Pour le « Player of the week », prévoir une version claire avec un portrait lumineux ; la version sombre reste une variante possible.
 
 ### Photos et illustrations
 
@@ -121,6 +126,8 @@ Privilégier les photos du club : jeu, entraînement, équipe, geste, échange, 
 Utiliser les photos dont la diffusion a été autorisée par le club, notamment pour les jeunes. Indiquer le crédit lorsqu’il est fourni. Une photo d’archives conserve sa date ou sa saison quand le contexte pourrait faire croire à un événement actuel : le trophée U16 de la page d’accueil renvoie à **2025**.
 
 Si une illustration est nécessaire, employer des formes simples liées au terrain, au ballon, au parcours et au collectif, dans la palette publique. Une illustration générée ne doit pas être présentée comme une photo réelle de joueurs UEB, d’un match ou d’un événement du club. Ajouter les textes et les logos officiels dans l’outil de mise en page après la création du fond.
+
+Un portrait généré peut servir à tester une composition si le joueur est fictif et si l’exemple le dit explicitement. Il doit être remplacé par une photo autorisée du joueur concerné avant une distinction réelle. Le nom, le numéro et les statistiques de démonstration restent eux aussi des contenus fictifs.
 
 ## 6. Formats de fabrication et adaptation par canal
 
@@ -258,8 +265,10 @@ alternatif. Fournis les exports aux dimensions prévues et un fichier modifiable
 si ton outil le permet. Si ton outil ne peut pas produire l’un de ces fichiers,
 indique-le et fournis les spécifications de composition correspondantes.
 
-Ajoute les textes et les logos officiels dans l’outil de mise en page.
-Préserve les couleurs et les proportions du blason. Vérifie la lisibilité
+Ajoute les textes et les logos dans l’outil de mise en page. Le blason officiel
+identifiant reste entier et inchangé ; un fond monochrome ou partiel emploie
+le dérivé décoratif fourni, dans ses proportions. Garde une seule signature
+club visible et agrandis les informations utiles. Vérifie la lisibilité
 à la taille d’un téléphone et liste les éventuels points restant à confirmer.
 ```
 
@@ -273,7 +282,8 @@ Convention de nommage : `ueb_[sujet]_[date-diffusion-AAAA-MM-JJ]_[canal]_[largeu
 
 - [ ] Palette publique 2026 exacte, fond cohérent et accents mesurés.
 - [ ] Kanit et DM Sans réellement utilisées, sans substitution.
-- [ ] Blason officiel entier, non déformé, bien visible ; partenaires exacts si présents.
+- [ ] Identification du club simple et lisible : blason officiel entier et inchangé, ou dérivé décoratif fourni, proportionné et cadré selon le modèle ; partenaires exacts si présents.
+- [ ] Aucun micro-en-tête ou pied de page inutile ; informations utiles lisibles à la taille d’un téléphone.
 - [ ] Un sujet, une hiérarchie claire, marges et tailles lisibles sur téléphone.
 - [ ] Photo appropriée, autorisée et correctement contextualisée ; crédit conservé si demandé.
 - [ ] Noms, catégorie, scores, dates, horaires, salle, conditions et disponibilité vérifiés selon le sujet.
@@ -294,6 +304,7 @@ Le guide est autonome pour la fabrication ; les références ci-dessous permette
 | `ueb-public/src/translations/fr/values.ts` et `src/utils/socialMedia.ts` | Valeurs du club et compte Instagram référencé. |
 | `ueb-documentation/Tickets/2026-10-21-public-ui-ux/g2/DECISIONS.md` | Choix visuel, palette, refus du crème dominant et validation de la cible G2 v4 le 21 octobre 2026. |
 | `ueb-brand/src/tokens.ts` et `src/logos/uccle-europe.svg` | Distinction avec les tokens techniques et fichier officiel du blason. |
+| Retour utilisateur sur la proposition sociale v01 | Exploration autorisée du blason monochrome ou partiel en fond, versions photo plus claires et suppression des microtextes d’habillage. |
 
 Relevé local : `ueb-public` au commit `c23b79c`, `ueb-brand` avant ajout du guide au commit `c4f4c3d`. Les prescriptions sociales de ce document sont une déclinaison opérationnelle de ces sources ; elles ne déclarent ni publication du nouveau site ni ouverture d’une offre.
 

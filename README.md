@@ -15,7 +15,10 @@ current app tokens.
 
 The [social template kit](social-kit/README.md) adds seven editable layouts,
 fictional examples, feed/story PNGs, the official crest, fonts and a focused
-ChatGPT execution brief. Start with the [visual board](social-kit/previews/planche-feed.png).
+ChatGPT execution brief. Its v02 proposal explores photographic backgrounds,
+decorative crest crops and a lighter player portrait layout while removing
+repeated small header/footer text. Start with the [visual board](social-kit/previews/planche-feed.png)
+and the [visual explorations](social-kit/previews/planche-explorations.png).
 
 ## Why
 

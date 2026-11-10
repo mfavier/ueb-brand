@@ -3,34 +3,34 @@
   "matches": [
     {
       "day": "[JOUR]",
-      "category": "[ÉQUIPE]",
+      "category": "[CAT.]",
       "opponent": "[ADVERSAIRE]",
       "venue": "[SALLE · VILLE]",
-      "side": "[DOMICILE OU EXTÉRIEUR]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
       "time": "00:00"
     },
     {
       "day": "[JOUR]",
-      "category": "[ÉQUIPE]",
+      "category": "[CAT.]",
       "opponent": "[ADVERSAIRE]",
       "venue": "[SALLE · VILLE]",
-      "side": "[DOMICILE OU EXTÉRIEUR]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
       "time": "00:00"
     },
     {
       "day": "[JOUR]",
-      "category": "[ÉQUIPE]",
+      "category": "[CAT.]",
       "opponent": "[ADVERSAIRE]",
       "venue": "[SALLE · VILLE]",
-      "side": "[DOMICILE OU EXTÉRIEUR]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
       "time": "00:00"
     },
     {
       "day": "[JOUR]",
-      "category": "[ÉQUIPE]",
+      "category": "[CAT.]",
       "opponent": "[ADVERSAIRE]",
       "venue": "[SALLE · VILLE]",
-      "side": "[DOMICILE OU EXTÉRIEUR]",
+      "side": "[DOMICILE / EXTÉRIEUR]",
       "time": "00:00"
     }
   ],
