@@ -3,11 +3,19 @@ export type PosterFormat = 'feed' | 'story';
 export type TextValue = string | readonly string[];
 export type ImagePosition = 'center' | 'top' | 'bottom' | 'left' | 'right';
 export type BackgroundColor = 'white' | 'paper' | 'sky' | 'blue' | 'night' | 'gold';
+export interface PhotoSettings {
+  placement?: 'auto' | 'above' | 'left' | 'right';
+  width?: number; height?: number; align?: number;
+  fit?: 'cover' | 'contain'; x?: number; y?: number; zoom?: number;
+  effect?: 'original' | 'grayscale' | 'tint'; tint?: BackgroundColor;
+  strength?: number; opacity?: number;
+}
 export interface VisualSettings {
   source: 'auto' | 'photo' | 'logo' | 'none';
   mode?: 'background-monochrome' | 'foreground-color';
   photo?: string | null;
   logo?: string | null;
+  photoSettings?: PhotoSettings;
 }
 export interface ResolvedVisual {
   source: 'photo' | 'logo' | 'none';
@@ -44,6 +52,9 @@ export function getAssetDataURL(path: string): string;
 export function resolvePosterVisual(templateId: TemplateId, data: PosterData): ResolvedVisual;
 export function getPosterBackground(templateId: TemplateId, data?: PosterData): BackgroundColor;
 export function getPosterCrest(templateId: TemplateId, data: PosterData): Required<CrestSettings>;
+export function getPosterPhotoSettings(templateId: TemplateId, data: PosterData): Required<PhotoSettings>;
+/** Decode the embedded primary photo before synchronous layout/cropping. */
+export function preparePosterImages(templateId: TemplateId, data: PosterData): Promise<void>;
 export function buildPoster(templateId: TemplateId, data?: PosterData, format?: PosterFormat): PosterResult;
 export function paginatePosterData(templateId: TemplateId, data: PosterData, format?: PosterFormat): PosterData[];
 export function posterToPng(svg: string): Promise<Blob>;

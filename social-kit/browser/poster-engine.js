@@ -31,6 +31,34 @@ export function resolvePosterVisual(templateId, data) {
   return { source, image, mode, clubLogo };
 }
 
+/** Percent focal points remain useful across feed, story and different frames. */
+export function getPosterPhotoSettings(templateId, data) {
+  const visual = resolvePosterVisual(templateId, data);
+  const background = visual.mode === 'background-monochrome';
+  const legacyPosition = { top: [50, 0], bottom: [50, 100], left: [0, 50], right: [100, 50] }[data.photoPosition] || [50, 50];
+  const crest = getPosterCrest(templateId, data);
+  const settings = { placement: 'auto', width: 100, height: 420, align: 50,
+    fit: 'cover', x: legacyPosition[0], y: legacyPosition[1], zoom: 1,
+    effect: background ? 'tint' : 'original', tint: crest.color,
+    strength: 1, opacity: background ? data.crest?.opacity ?? .25 : 1,
+    ...Object.fromEntries(Object.entries(data.visual?.photoSettings || {}).filter(([, value]) => value !== undefined)) };
+  if (['left', 'right'].includes(settings.placement)) settings.width = Math.min(60, settings.width);
+  return settings;
+}
+
+const photoSizes = new Map();
+export async function preparePosterImages(templateId, data) {
+  const visual = resolvePosterVisual(templateId, data);
+  if (visual.source !== 'photo' || !visual.image) return;
+  const uri = imageURL(visual.image);
+  if (!uri || photoSizes.has(uri)) return;
+  const image = new Image(); image.src = uri;
+  await image.decode();
+  if (!image.naturalWidth || !image.naturalHeight) throw new Error('La photo ne peut pas être décodée.');
+  if (photoSizes.size >= 40) photoSizes.delete(photoSizes.keys().next().value);
+  photoSizes.set(uri, { width: image.naturalWidth, height: image.naturalHeight });
+}
+
 /** One source of layout defaults for renderer and controls. */
 export function getPosterCrest(templateId, data) {
   const dark = ['night', 'blue'].includes(getPosterBackground(templateId, data));
@@ -205,7 +233,9 @@ class Poster {
       this.d.backgroundStyle = 'plain';
       if (key === '03-partenaire') this.d.logo = null;
       if (this.visual.mode === 'foreground-color' && this.visual.image) {
-        if (key === '04-player-of-the-week') this.d.portrait = this.visual.image;
+        if (this.visual.source === 'photo' && data.visual.photoSettings?.placement && data.visual.photoSettings.placement !== 'auto'
+          && ['05-annonce-officielle', '06-communication', '08-libre'].includes(key)) this.editorialPhoto = this.visual.image;
+        else if (key === '04-player-of-the-week') this.d.portrait = this.visual.image;
         else if (key === '07-score-final') this.d.backgroundPhoto = this.visual.image;
         else if (key === '08-libre') this.d.photo = this.visual.image;
         else if (key === '03-partenaire') this.d.logo = this.visual.image;
@@ -301,6 +331,28 @@ class Poster {
       if (value) this.warn('Une image n’a pas pu être incorporée. Ajoutez-la à nouveau depuis votre appareil.');
       return;
     }
+    const primary = this.visual?.source === 'photo' && ['visual-background', 'visual-foreground', 'player-photo', 'match-photo', 'free-photo', 'partner-logo', 'editorial-photo'].includes(field);
+    if (primary && this.d.visual?.photoSettings) {
+      const settings = getPosterPhotoSettings(this.key, this.d);
+      const natural = photoSizes.get(uri);
+      if (!natural) this.warn('Le cadrage de la photo est encore en préparation.');
+      const intrinsic = natural || { width, height };
+      const scale = (settings.fit === 'contain' ? Math.min : Math.max)(width / intrinsic.width, height / intrinsic.height) * settings.zoom;
+      const imageWidth = intrinsic.width * scale, imageHeight = intrinsic.height * scale;
+      const imageX = (width - imageWidth) * settings.x / 100, imageY = (height - imageHeight) * settings.y / 100;
+      let filter = '';
+      if (settings.effect !== 'original') {
+        const color = settings.effect === 'grayscale' ? COLORS.white : COLORS[settings.tint] || COLORS.night;
+        const channels = [1, 3, 5].map(index => parseInt(color.slice(index, index + 2), 16) / 255);
+        const mix = settings.strength;
+        const matrix = channels.map((channel, row) => [.2126, .7152, .0722].map((luminance, col) => luminance * channel * mix + (row === col ? 1 - mix : 0)).concat([0, 0]).join(' ')).join(' ') + ' 0 0 0 1 0';
+        const id = `photo-effect-${++this.counter}`;
+        this.parts.push(`<defs><filter id="${id}" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values="${matrix}"/></filter></defs>`);
+        filter = ` filter="url(#${id})"`;
+      }
+      this.parts.push(`<svg id="${escapeXML(field)}" data-photo-frame="true" x="${x}" y="${y}" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" overflow="hidden" opacity="${settings.opacity}"><image href="${escapeXML(uri)}" x="${imageX}" y="${imageY}" width="${imageWidth}" height="${imageHeight}" preserveAspectRatio="none"${filter}/></svg>`);
+      return;
+    }
     const alignment = { center: 'xMidYMid', top: 'xMidYMin', bottom: 'xMidYMax', left: 'xMinYMid', right: 'xMaxYMid' }[position] || 'xMidYMid';
     this.parts.push(`<svg id="${escapeXML(field)}" x="${x}" y="${y}" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" overflow="hidden" opacity="${opacity}"><image href="${escapeXML(uri)}" width="${width}" height="${height}" preserveAspectRatio="${alignment} ${contain ? 'meet' : 'slice'}"/></svg>`);
   }
@@ -318,7 +370,8 @@ class Poster {
     if (this.visual) {
       if (this.visual.mode === 'background-monochrome' && this.visual.image) {
         const settings = getPosterCrest(this.key, { ...this.d, surface: this.bg });
-        if (this.visual.clubLogo) this.crest(settings);
+        if (this.visual.source === 'photo' && this.d.visual.photoSettings) this.image(this.visual.image, 0, 0, 1080, this.height, 'visual-background');
+        else if (this.visual.clubLogo) this.crest(settings);
         else {
           const tint = COLORS[settings.color] || COLORS[this.dark ? 'white' : 'night'];
           const channels = [1, 3, 5].map(index => parseInt(tint.slice(index, index + 2), 16) / 255);
@@ -463,6 +516,7 @@ class Poster {
   }
 
   official() {
+    if (this.editorialPhoto) return this.photoEditorial();
     this.title(['ANNONCE', 'OFFICIELLE.'], this.d.edition, 104);
     const off = this.offset;
     this.lines(upper(this.d.subject), 72, 520 + off, 94, 100, { display: true, weight: 700, color: this.dark ? COLORS.sky : this.ink, tracking: -1.1, field: 'subject', maxWidth: 936 }, 2);
@@ -471,6 +525,7 @@ class Poster {
   }
 
   communication() {
+    if (this.editorialPhoto) return this.photoEditorial();
     this.title(['BON À', 'SAVOIR.'], this.d.edition, 108);
     const off = this.offset;
     this.lines(upper(this.d.subject), 72, 510 + off, 88, 95, { display: true, weight: 700, color: this.accent, tracking: -1, field: 'subject', maxWidth: 936 }, 2);
@@ -519,6 +574,53 @@ class Poster {
     this.text(this.d.awayScore ?? '', 1008, scoreY, compact && photo ? 184 : 238, { display: true, weight: 800, tracking: -6, anchor: 'end', field: 'away-score', maxWidth: 405 });
   }
 
+  photoEditorialHeader() {
+    const settings = getPosterPhotoSettings(this.key, this.d);
+    const subjectIsTitle = !cleanLines(this.d.title).length && cleanLines(this.d.subject).length;
+    const fallback = this.key === '05-annonce-officielle' ? ['ANNONCE', 'OFFICIELLE.'] : this.key === '06-communication' ? ['BON À', 'SAVOIR.'] : ['UCCLE EUROPE.'];
+    this.title(subjectIsTitle ? upper(this.d.subject) : fallback, this.d.edition, 94, 3);
+    let top = this.headerBottom + 80;
+    if (!subjectIsTitle && cleanLines(this.d.subject).length) {
+      const lines = wrapLines(this.d.subject, 56, 936, 700, true);
+      this.lines(lines, 72, top, 56, 66, { display: true, weight: 700, field: 'subject', maxWidth: 936 }, Math.max(1, lines.length));
+      top += lines.length * 66 + 32;
+    }
+    if (this.d.when) {
+      const lines = wrapLines(this.d.when, 44, 936, 700);
+      this.lines(lines, 72, top, 44, 54, { weight: 700, color: this.accent, field: 'effective-date', maxWidth: 936 }, Math.max(1, lines.length));
+      top += lines.length * 54 + 32;
+    }
+    const extras = [['signature', this.d.signature], ['note', this.d.note], ['action', this.d.action]].filter(([, value]) => cleanLines(value).length)
+      .map(([field, value]) => ({ field, lines: wrapLines(value, 40, 936, field === 'action' ? 700 : 500) }));
+    const extraHeight = extras.reduce((height, extra) => height + extra.lines.length * 50 + 24, 0);
+    const bottom = this.contentBottom - extraHeight - 24;
+    let extraY = this.contentBottom - extraHeight + 40;
+    for (const extra of extras) {
+      this.lines(extra.lines, 72, extraY, 40, 50, { weight: extra.field === 'action' ? 700 : 500, color: this.accent, field: extra.field, maxWidth: 936 }, extra.lines.length);
+      extraY += extra.lines.length * 50 + 24;
+    }
+    let x = 72, width = 936, bodyStart = top + 40;
+    const side = ['left', 'right'].includes(settings.placement);
+    const photoWidth = 936 * settings.width / 100;
+    const text = this.key === '06-communication' ? this.d.details : this.d.body || this.d.details;
+    const reserve = side ? 0 : Math.min(3, wrapLines(text, 44, 936).length) * 60 + 48;
+    const photoHeight = Math.max(140, Math.min(settings.height, bottom - top - reserve));
+    if (top + photoHeight + reserve > bottom) this.warn('Le titre ou les mentions ne laissent pas assez de place à la photo. Raccourcissez-les ou choisissez une Story.');
+    const photoX = side ? settings.placement === 'left' ? 72 : 1008 - photoWidth : 72 + (936 - photoWidth) * settings.align / 100;
+    this.image(this.editorialPhoto, photoX, top, photoWidth, photoHeight, 'editorial-photo');
+    if (side) {
+      width = 936 - photoWidth - 48;
+      if (settings.placement === 'left') x = 72 + photoWidth + 48;
+    } else bodyStart = top + photoHeight + 64;
+    return { x, width, bodyStart, size: 44, leading: 60, maxLines: Math.max(1, Math.floor((bottom - bodyStart) / 60) + 1) };
+  }
+
+  photoEditorial() {
+    const layout = this.photoEditorialHeader();
+    const text = this.key === '06-communication' ? this.d.details : this.d.body || this.d.details;
+    this.lines(text, layout.x, layout.bodyStart, layout.size, layout.leading, { field: 'body', maxWidth: layout.width }, layout.maxLines);
+  }
+
   freeHeader() {
     this.title(cleanLines(this.d.subject).length && !cleanLines(this.d.title).length ? upper(this.d.subject) : ['UCCLE EUROPE.'], this.d.edition, 94);
     let bodyStart = this.headerBottom + 116;
@@ -539,6 +641,7 @@ class Poster {
   }
 
   free() {
+    if (this.editorialPhoto) return this.photoEditorial();
     const { bodyStart, maxLines } = this.freeHeader();
     this.lines(this.d.body || this.d.details, 72, bodyStart, 44, 60, { field: 'body', maxWidth: 936 }, maxLines);
     if (this.d.action) this.text(this.d.action, 72, this.contentBottom - 12, 44, { weight: 700, color: this.accent, field: 'action', maxWidth: 936 });
@@ -580,6 +683,14 @@ function validateData(poster) {
   if (d.visual) {
     if (!['auto', 'photo', 'logo', 'none'].includes(d.visual.source) || (d.visual.mode !== undefined && !['background-monochrome', 'foreground-color'].includes(d.visual.mode))) poster.warn('Choisissez un visuel et une présentation valides.');
     if (poster.visual.source === 'photo' && !poster.visual.image) poster.warn('Ajoutez une photo ou choisissez le logo du club.');
+    const photo = d.visual.photoSettings;
+    if (photo) {
+      const ranges = { width: [30, 100], height: [140, 900], align: [0, 100], x: [0, 100], y: [0, 100], zoom: [1, 4], strength: [0, 1], opacity: [0, 1] };
+      const enums = { placement: ['auto', 'above', 'left', 'right'], fit: ['cover', 'contain'], effect: ['original', 'grayscale', 'tint'], tint: BACKGROUNDS };
+      if (typeof photo !== 'object' || Array.isArray(photo) || Object.entries(photo).some(([key, value]) => value !== undefined && (ranges[key]
+        ? !Number.isFinite(value) || value < ranges[key][0] || value > ranges[key][1]
+        : !enums[key]?.includes(value)))) poster.warn('Les réglages de la photo sont invalides. Réinitialisez le cadrage ou le traitement.');
+    }
   }
   const present = value => cleanLines(value).length > 0;
   const need = (value, label) => { if (!present(value)) poster.warn(`Complétez ${label} avant l’export.`); };
@@ -630,8 +741,12 @@ export function paginatePosterData(templateId, data, format = 'feed') {
   if (!field) return [{ ...data }];
   let capacity = templateId === '05-annonce-officielle' ? 4 : 2;
   let size = templateId === '03-partenaire' ? 48 : templateId === '06-communication' ? 46 : 44;
-  if (templateId === '08-libre') { const probe = new Poster(templateId, data, format); capacity = probe.freeHeader().maxLines; }
-  const lines = wrapLines(data[field], size, 936);
+  let width = 936;
+  const probe = new Poster(templateId, data, format);
+  if (probe.editorialPhoto) {
+    const layout = probe.photoEditorialHeader(); capacity = layout.maxLines; size = layout.size; width = layout.width;
+  } else if (templateId === '08-libre') capacity = probe.freeHeader().maxLines;
+  const lines = wrapLines(data[field], size, width);
   if (!lines.length) return [{ ...data }];
   const pages = [];
   for (let index = 0; index < lines.length; index += capacity) pages.push({ ...data, [field]: lines.slice(index, index + capacity) });

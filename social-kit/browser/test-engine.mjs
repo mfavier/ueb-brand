@@ -103,8 +103,57 @@ try {
     try { await engine.posterToPng(long.svg); } catch { blocked = true; }
     const external = engine.buildPoster('08-libre', { title: 'TEST', photo: 'https://example.com/photo.png' });
     const crestResults = ['04-player-of-the-week', '07-score-final', '08-libre'].map(template => engine.buildPoster(template, { ...fixtures[template], crest: { x: 123, y: 234, width: 555, opacity: .22, color: 'blue' } }, 'story').svg.includes('id="decorative-crest" x="123" y="434" width="555"'));
+    const photoCopies = [];
+    for (const template of ['05-annonce-officielle', '06-communication', '08-libre']) for (const placement of ['above', 'left', 'right']) for (const format of ['feed', 'story']) for (const sponsored of [false, true]) {
+      const message = Array.from({ length: 8 }, (_, i) => `Information ${i + 1} pour les familles du club.`).join(' ');
+      const data = { subject: 'RENDEZ-VOUS CLUB', [template === '06-communication' ? 'details' : 'body']: message,
+        ...(sponsored ? { sponsor } : {}), action: 'www.uebasket.be', visual: { source: 'photo', mode: 'foreground-color', photo,
+          photoSettings: { placement, width: placement === 'above' ? 82 : 45, height: placement === 'above' ? 420 : 600, fit: 'contain', zoom: 1, x: 50, y: 0 } } };
+      await engine.preparePosterImages(template, data);
+      const pages = engine.paginatePosterData(template, data, format);
+      const copy = pages.map(page => page[template === '06-communication' ? 'details' : 'body'].join(' ')).join(' ');
+      photoCopies.push({ message, copy });
+      for (const [index, paged] of pages.entries()) {
+        const result = engine.buildPoster(template, paged, format);
+        const parsed = new DOMParser().parseFromString(result.svg, 'image/svg+xml');
+        const frame = parsed.querySelector('[data-photo-frame]');
+        const bounds = { x: +frame.getAttribute('x'), y: +frame.getAttribute('y'), w: +frame.getAttribute('width'), h: +frame.getAttribute('height') };
+        const body = [...parsed.querySelectorAll('text[id^="body-"]')];
+        const overlaps = body.some(node => {
+          const x = +node.getAttribute('x'), y = +node.getAttribute('y');
+          return x < bounds.x + bounds.w && x >= bounds.x && y > bounds.y && y < bounds.y + bounds.h;
+        });
+        if (overlaps || bounds.x < 72 || bounds.x + bounds.w > 1008.1 || bounds.y + bounds.h > (format === 'story' ? 1630 : 1060)) result.warnings.push('Photo overlaps body or footer');
+        checks.push(await check(`photo-${template}-${placement}-${format}-${sponsored}-page${index + 1}`, result));
+      }
+    }
+    const swatches = `data:image/svg+xml;base64,${btoa('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="800"><path fill="#ff0000" d="M0 0h400v200H0z"/><path fill="#00ff00" d="M0 200h400v400H0z"/><path fill="#0000ff" d="M0 600h400v200H0z"/></svg>')}`;
+    const samplePhoto = async (photoSettings, image = swatches, mode = 'foreground-color') => {
+      const data = { title: 'PHOTO', body: 'Un message.', surface: 'white', visual: { source: 'photo', mode, photo: image, photoSettings: { placement: 'above', width: 100, height: 400, ...photoSettings } } };
+      await engine.preparePosterImages('08-libre', data);
+      const result = engine.buildPoster('08-libre', data);
+      if (result.warnings.length) throw new Error(result.warnings.join(' '));
+      const parsed = new DOMParser().parseFromString(result.svg, 'image/svg+xml');
+      const frame = parsed.querySelector('[data-photo-frame]'), node = frame.querySelector('image');
+      const imageBounds = Object.fromEntries(['x', 'y', 'width', 'height'].map(key => [key, +node.getAttribute(key)]));
+      const bitmap = await createImageBitmap(await engine.posterToPng(result.svg));
+      const canvas = document.createElement('canvas'); canvas.width = bitmap.width; canvas.height = bitmap.height;
+      const ctx = canvas.getContext('2d'); ctx.drawImage(bitmap, 0, 0); bitmap.close();
+      const x = +frame.getAttribute('x'), y = +frame.getAttribute('y'), w = +frame.getAttribute('width'), h = +frame.getAttribute('height');
+      return { pixel: [...ctx.getImageData(x + w / 2, y + h / 2, 1, 1).data], edge: [...ctx.getImageData(x + 2, y + h / 2, 1, 1).data], imageBounds };
+    };
+    const photoPixels = {
+      top: await samplePhoto({ y: 0 }), bottom: await samplePhoto({ y: 100 }),
+      contain: await samplePhoto({ fit: 'contain', y: 0 }), zoom: await samplePhoto({ zoom: 2, x: 0, y: 0 }),
+      gray: await samplePhoto({ effect: 'grayscale', y: 0 }, redPhoto),
+      opacity: await samplePhoto({ opacity: .5, y: 0 }, redPhoto),
+      zeroStrength: await samplePhoto({ effect: 'tint', tint: 'night', strength: 0, y: 0 }, redPhoto),
+      background: await samplePhoto({ effect: 'grayscale', opacity: .5, y: 0 }, redPhoto, 'background-monochrome'),
+      tints: await Promise.all(['night', 'blue', 'sky', 'gold', 'white', 'paper'].map(tint => samplePhoto({ effect: 'tint', tint, y: 0 }, redPhoto))),
+    };
+    window.__samplePhoto = samplePhoto; window.__photo = photo;
     window.__engine = engine; window.__fixtures = fixtures; window.__sponsor = sponsor;
-    return { checks, adaptivePages, pagination: pages.map(p => p.matches.map(m => m.id)), freeCopy: freePages.map(p => (Array.isArray(p.body) ? p.body : [p.body]).join(' ')).join(' '), longCopy, warningExportBlocked: blocked, externalWarnings: external.warnings, crestResults, monochromePixel, foregroundPixel };
+    return { checks, photoCopies, photoPixels, adaptivePages, pagination: pages.map(p => p.matches.map(m => m.id)), freeCopy: freePages.map(p => (Array.isArray(p.body) ? p.body : [p.body]).join(' ')).join(' '), longCopy, warningExportBlocked: blocked, externalWarnings: external.warnings, crestResults, monochromePixel, foregroundPixel };
   });
   const failures = report.checks.filter(r => r.warnings.length || r.collisions.length || r.overflow.length || r.tooSmall.length || r.external || !r.png || r.png.width !== 1080 || ![1350, 1920].includes(r.png.height));
   if (process.env.UEB_ENGINE_QA_DIR) {
@@ -116,7 +165,32 @@ try {
       await page.screenshot({ path: path.join(process.env.UEB_ENGINE_QA_DIR, `${template}.png`) });
     }
   }
+  if (process.env.UEB_ENGINE_QA_DIR) {
+    for (const placement of ['above', 'left', 'right']) {
+      await page.evaluate(async placement => {
+        const engine = window.__engine;
+        const data = { subject: 'TOMBOLA DU CLUB', body: 'Retrouvons-nous samedi pour soutenir les équipes. Inscriptions auprès du club.', action: 'www.uebasket.be', sponsor: window.__sponsor,
+          visual: { source: 'photo', photo: window.__photo, photoSettings: { placement, width: placement === 'above' ? 80 : 45, height: 500, fit: 'contain', y: 0 } } };
+        await engine.preparePosterImages('08-libre', data);
+        document.body.innerHTML = engine.buildPoster('08-libre', engine.paginatePosterData('08-libre', data)[0]).svg;
+      }, placement);
+      await page.screenshot({ path: path.join(process.env.UEB_ENGINE_QA_DIR, `photo-${placement}.png`) });
+    }
+  }
   assert.deepEqual(failures, [], 'Valid compositions must render without warnings, collisions, overflow or small text');
+  for (const copy of report.photoCopies) assert.equal(copy.copy, copy.message, 'Photo layout pagination preserves all words');
+  const pp = report.photoPixels;
+  assert.ok(pp.top.pixel[0] > 240 && pp.top.pixel[1] < 10, 'Top crop preserves the head of a portrait');
+  assert.ok(pp.bottom.pixel[2] > 240 && pp.bottom.pixel[0] < 10, 'Bottom crop moves to the feet');
+  assert.ok(pp.contain.edge.slice(0, 3).every(v => v > 240), 'Contain keeps a clear margin around the whole portrait');
+  assert.equal(pp.zoom.imageBounds.width, pp.top.imageBounds.width * 2, 'Zoom uses intrinsic proportions');
+  assert.equal(pp.gray.pixel[0], pp.gray.pixel[1]); assert.equal(pp.gray.pixel[1], pp.gray.pixel[2]);
+  assert.ok(pp.opacity.pixel[0] > 240 && pp.opacity.pixel[1] > 120 && pp.opacity.pixel[1] < 135, 'Opacity is applied in the PNG');
+  assert.ok(pp.zeroStrength.pixel[0] > 240 && pp.zeroStrength.pixel[1] < 10, 'Zero filter strength preserves original colour');
+  assert.ok(Math.abs(pp.background.pixel[0] - pp.background.pixel[2]) < 2, 'Background photos use the chosen effect');
+  assert.ok(pp.tints[0].pixel[2] > pp.tints[0].pixel[0]);
+  assert.ok(pp.tints[3].pixel[0] > pp.tints[3].pixel[2], 'Gold tint uses the official palette');
+  assert.ok(pp.tints[4].pixel[0] === pp.tints[4].pixel[2], 'White tint is monochrome');
   assert.deepEqual(report.pagination.flat(), Array.from({ length: 9 }, (_, i) => String(i)));
   assert.equal(report.pagination.length, 3, 'Nine short fixtures should remain three pages');
   for (const entry of report.adaptivePages) assert.deepEqual(entry.ids, Array.from({ length: 9 }, (_, i) => String(i)), 'Long labels must preserve every selected game');
