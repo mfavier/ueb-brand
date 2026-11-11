@@ -30,7 +30,9 @@ autonome : aucune résolution vers le dépôt voisin n’est nécessaire.
 ## Contrat
 
 `initEngine({assetBaseUrl:'/social-posts/'})` charge les actifs locaux. Après
-initialisation, `paginatePosterData(template, data, format)` conserve tous les
+initialisation et incorporation des images, attendre
+`preparePosterImages(template, data)` pour décoder les dimensions intrinsèques de la
+photo principale. Ensuite, `paginatePosterData(template, data, format)` conserve tous les
 matchs ou paragraphes et retourne des pages indépendantes. `buildPoster` retourne
 le SVG et les avertissements ; l’interface doit bloquer tous les exports tant
 qu’un avertissement subsiste. `posterToPng` vérifie également ces avertissements.
@@ -59,3 +61,25 @@ avec les valeurs exactes de la palette publique et des textes contrastés.
 Les documents sans `visual` conservent leur lecture historique. Le monochrome
 est un filtre SVG conservé dans le PNG ; les tests vérifient ses pixels ainsi
 que la conservation des couleurs au premier plan. Les exports restent autonomes.
+
+## Photos réglables
+
+`visual.photoSettings` est facultatif : son absence conserve les compositions et
+recadrages historiques. `getPosterPhotoSettings` fournit les valeurs effectives,
+y compris l’ancien `photoPosition`. Les pourcentages `x` et `y` placent la photo
+entre les deux bords possibles de son cadre ; `zoom` multiplie son échelle sans
+déformation. `fit` choisit le remplissage (`cover`) ou la photo entière (`contain`).
+
+Sur annonce, communication et sujet libre, `placement` propose `above`, `left`,
+`right`, ou `auto` pour la composition historique. Largeur, hauteur et alignement
+sont réglables ; les colonnes photo sont limitées à 60 % pour garder du texte
+lisible. La hauteur s’adapte à la place disponible, au format et au sponsor. Le
+texte paginé reste intégral, sans diminution de sa taille.
+
+Les effets `original`, `grayscale` et `tint` sont indépendants du premier plan ou
+du fond. La teinte vient des six couleurs de la charte, avec intensité et opacité.
+Ces traitements concernent uniquement la photo principale. Les fichiers officiels
+des logos et la zone du partenaire de soutien conservent leurs couleurs.
+Le SVG autonome contient le cadrage et le filtre ; le PNG produit le même rendu.
+Les tests couvrent 406 compositions et les pixels exportés (cadrage haut/bas,
+photo entière, zoom, noir et blanc, teintes, intensité nulle, opacité).
