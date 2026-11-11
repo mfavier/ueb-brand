@@ -1,0 +1,58 @@
+{
+  "kind": "private-plugin-delivery",
+  "createdAt": "2026-11-11T20:17:56.039239+00:00",
+  "repository": "mfavier/ueb-brand",
+  "sourceBranch": "feat/brand-system-documents",
+  "sourceCommit": "3d82115ccec74d665df744133893a6892c24d5d5",
+  "pullRequest": "https://github.com/mfavier/ueb-brand/pull/7",
+  "identity": {
+    "id": "ueb-public-2026",
+    "version": "1.0.0"
+  },
+  "historicalTokenSnapshot": {
+    "id": "ueb-apps-legacy",
+    "version": "0.4.0"
+  },
+  "templatesVersion": "1.0.0",
+  "rendererVersion": "0.1.0",
+  "plugin": {
+    "id": "plugins_6af4cd1a565c819191c5f686dc47ad39",
+    "releaseId": "pluginrel_6af4cd1c9dcc8191ad4d444be2a95757",
+    "version": "0.1.0",
+    "url": "https://chatgpt.com/plugins/plugins_6af4cd1a565c819191c5f686dc47ad39",
+    "scope": "USER",
+    "visibility": "PRIVATE",
+    "filesAndSkillReadBackVerified": true
+  },
+  "archive": {
+    "name": "ueb-documents-plugin-0.1.0.zip",
+    "sha256": "fbee63a7eb82edce2a334bf9716e2bdbae6d31764337661bf3ddb3c2e27452f5",
+    "bytes": 2995585
+  },
+  "verification": {
+    "existingPackageTests": 17,
+    "documentTests": 8,
+    "archiveTests": 1,
+    "samplePages": [
+      6,
+      4,
+      5
+    ],
+    "longCopyPages": 8,
+    "isolatedArchiveExecution": true,
+    "fontsAndOverflowChecked": true,
+    "sourceAndIdentityHashesVerified": true,
+    "freshChatGPTProConversationTested": false,
+    "githubAutomaticSyncConfigured": false,
+    "ci": [
+      "https://github.com/mfavier/ueb-brand/actions/runs/43094745738",
+      "https://github.com/mfavier/ueb-brand/actions/runs/43094745953"
+    ]
+  },
+  "publication": {
+    "mainMerged": false,
+    "gitTagCreated": false,
+    "applicationPackageVersion": "0.4.0",
+    "managerModified": false
+  }
+}
