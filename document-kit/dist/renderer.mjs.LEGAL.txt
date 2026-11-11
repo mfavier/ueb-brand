@@ -1,0 +1,87 @@
+Bundled license information:
+
+react/cjs/react.production.min.js:
+  /**
+   * @license React
+   * react.production.min.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+react/cjs/react.development.js:
+  /**
+   * @license React
+   * react.development.js
+   *
+   * Copyright (c) Facebook, Inc. and its affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+scheduler/cjs/scheduler.production.js:
+  /**
+   * @license React
+   * scheduler.production.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+scheduler/cjs/scheduler.development.js:
+  /**
+   * @license React
+   * scheduler.development.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+
+object-assign/index.js:
+  /*
+  object-assign
+  (c) Sindre Sorhus
+  @license MIT
+  */
+
+@noble/hashes/esm/utils.js:
+  /*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+@noble/ciphers/esm/utils.js:
+  /*! noble-ciphers - MIT License (c) 2023 Paul Miller (paulmillr.com) */
+
+@react-pdf/textkit/lib/textkit.js:
+  /**
+   * @param nodes
+   * @param availableWidths
+   * @param tolerance
+   * @preserve Knuth and Plass line breaking algorithm in JavaScript
+   */
+
+@react-pdf/reconciler/lib/reconciler-31.js:
+@react-pdf/reconciler/lib/reconciler-33.js:
+  /**
+   * @license React
+   * react-reconciler.development.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */
+  /**
+   * @license React
+   * react-reconciler-constants.development.js
+   *
+   * Copyright (c) Meta Platforms, Inc. and affiliates.
+   *
+   * This source code is licensed under the MIT license found in the
+   * LICENSE file in the root directory of this source tree.
+   */

@@ -1,0 +1,14 @@
+{
+  "name": "@ueb/documents",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test test/*.test.mjs",
+    "example": "node scripts/render.mjs --input ../examples/documents/sponsoring-demo.json --output ../examples/documents/sponsoring-demo.pdf"
+  },
+  "dependencies": {"@react-pdf/renderer": "4.9.0", "ajv": "8.20.0", "react": "18.3.1"},
+  "devDependencies": {"esbuild": "0.28.2"}
+}

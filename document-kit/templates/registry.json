@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "templates": [
+    {
+      "id": "sponsorship-dossier",
+      "version": "1.0.0",
+      "name": "Dossier de sponsoring",
+      "pageKinds": [
+        "cover",
+        "story",
+        "cards",
+        "offers",
+        "process",
+        "contact"
+      ]
+    },
+    {
+      "id": "club-presentation",
+      "version": "1.0.0",
+      "name": "Présentation du club",
+      "pageKinds": [
+        "cover",
+        "story",
+        "cards",
+        "contact"
+      ]
+    },
+    {
+      "id": "partnership-proposal",
+      "version": "1.0.0",
+      "name": "Proposition de partenariat",
+      "pageKinds": [
+        "cover",
+        "story",
+        "offers",
+        "process",
+        "contact"
+      ]
+    }
+  ]
+}

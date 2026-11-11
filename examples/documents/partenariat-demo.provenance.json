@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "documentId": "partenariat-demo",
+  "identity": {
+    "id": "ueb-public-2026",
+    "version": "1.0.0",
+    "manifestSha256": "40b524d52f835a0ecba415bb59e144013d3bd52426060c96d56072e62f4cdbf4",
+    "files": {
+      "RULES.md": "08539b98cbdfa5d727fe705e8e4b62a0eccf0d95312db8367f7a16914ade4d18",
+      "assets/fonts/DM-Sans-400.ttf": "0e293c41cf31e9f73f706ae33d0bd291d702a7ca9f3fef7a649bbd9bcc428ec0",
+      "assets/fonts/DM-Sans-700.ttf": "4e3faa9fe087435213af01770a036a03b0db5598978c524edf9a6bea717bbf16",
+      "assets/fonts/DM-Sans-OFL.txt": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+      "assets/fonts/DM-Sans-Variable.ttf": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+      "assets/fonts/Kanit-Bold.ttf": "5dec5b080dab13de9d2295437c0ff3ec05c9e75587dfc31358c005eb4efa5e70",
+      "assets/fonts/Kanit-ExtraBold.ttf": "70082870d1f5bb6ae9faa708572b2c36de3c076caae187edae753f709d0de984",
+      "assets/fonts/Kanit-OFL.txt": "1f5d3dd287f8524cf0bb916fbf32185e240fd87f5e24318600fc416dee5077fe",
+      "assets/ueb-logo.png": "782bc7df5d35f7560d55243fef9760f31aa682cfbb853d5a15cf62b73feed783",
+      "assets/ueb-logo.svg": "9037f430905f4d33a05a843468ba9b3cc318a74f46d791b9b3a7f8eeab2456bf",
+      "tokens.json": "043889dd785e1c4f7a280e28473de1fb2585d4ca570555fafa18164a81e9f328"
+    }
+  },
+  "template": {
+    "id": "partnership-proposal",
+    "version": "1.0.0"
+  },
+  "renderer": {
+    "id": "ueb-documents",
+    "version": "0.1.0"
+  },
+  "inputSha256": "4cb8b4a0355d938d97fc98eed9187446c0a8cff3d8a3cbdda96aab79110ef769",
+  "portableSourceSha256": "e43a78928d3dfb5135578a09db2193860962947d469de6af72bf35ceef9f46a3",
+  "rendererBundleSha256": "1e5aa6558ecc4d505ba8bb07049f313fd4b7b381612a0069c60d9b1f4fe2b2ac",
+  "dependencyLockSha256": "4ee043ab155fceb441d06b91d5f0eec092684d00bbcdf891a9ee751b93247a77",
+  "nodeVersion": "v22.16.0",
+  "pdfSha256": "a5a1af4a4309cd379f8d520afd034b2678731d20a1096dd03cfc88ac0e683455",
+  "photoHashes": {
+    "assets/collectif-2025-2026.jpg": "57c4013088debb3e4beaa48ff838fc52a5d3da03d49a79ccb0b088aa6aeb1ac8"
+  },
+  "createdAt": "2026-11-11T00:00:00Z",
+  "status": "draft",
+  "demo": true
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "ueb-public-2026",
+  "version": "1.0.0",
+  "label": "UEB · identité publique 2026",
+  "createdOn": "2026-11-11",
+  "kind": "communication",
+  "tokens": "tokens.json",
+  "rules": "RULES.md",
+  "assets": {
+    "logo": "assets/ueb-logo.png",
+    "logoVector": "assets/ueb-logo.svg",
+    "bodyRegular": "assets/fonts/DM-Sans-400.ttf",
+    "bodyBold": "assets/fonts/DM-Sans-700.ttf",
+    "displayBold": "assets/fonts/Kanit-Bold.ttf",
+    "displayExtraBold": "assets/fonts/Kanit-ExtraBold.ttf"
+  },
+  "source": {
+    "repository": "mfavier/ueb-brand",
+    "commit": "4db9c35be93bfc8e6beea7f409af729e9697b33a",
+    "guide": "GUIDE-POSTS-RESEAUX-SOCIAUX.md"
+  },
+  "files": {
+    "RULES.md": "08539b98cbdfa5d727fe705e8e4b62a0eccf0d95312db8367f7a16914ade4d18",
+    "assets/fonts/DM-Sans-400.ttf": "0e293c41cf31e9f73f706ae33d0bd291d702a7ca9f3fef7a649bbd9bcc428ec0",
+    "assets/fonts/DM-Sans-700.ttf": "4e3faa9fe087435213af01770a036a03b0db5598978c524edf9a6bea717bbf16",
+    "assets/fonts/DM-Sans-OFL.txt": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+    "assets/fonts/DM-Sans-Variable.ttf": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+    "assets/fonts/Kanit-Bold.ttf": "5dec5b080dab13de9d2295437c0ff3ec05c9e75587dfc31358c005eb4efa5e70",
+    "assets/fonts/Kanit-ExtraBold.ttf": "70082870d1f5bb6ae9faa708572b2c36de3c076caae187edae753f709d0de984",
+    "assets/fonts/Kanit-OFL.txt": "1f5d3dd287f8524cf0bb916fbf32185e240fd87f5e24318600fc416dee5077fe",
+    "assets/ueb-logo.png": "782bc7df5d35f7560d55243fef9760f31aa682cfbb853d5a15cf62b73feed783",
+    "assets/ueb-logo.svg": "9037f430905f4d33a05a843468ba9b3cc318a74f46d791b9b3a7f8eeab2456bf",
+    "tokens.json": "043889dd785e1c4f7a280e28473de1fb2585d4ca570555fafa18164a81e9f328"
+  }
+}

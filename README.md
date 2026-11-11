@@ -5,6 +5,20 @@ source of truth for colour design tokens, typography, and the crest logo.
 
 Decision record: `ueb-documentation/docs/adr/0001-brand-identity-shared-package.md`.
 
+## Versioned identity and documents
+
+The [identity registry](identity/README.md) now gives communication an explicit
+`ueb-public-2026@1.0.0` reference and retains the app-token snapshot
+`ueb-apps-legacy@0.4.0`. The app package remains v0.4.0; these are independent
+version lines. Existing consumers migrate deliberately rather than following
+the registry's active pointer automatically.
+
+The [document kit](document-kit/README.md) adds A4 PDF recipes and a standalone
+renderer. [Examples](examples/documents/README.md) include sponsorship, club
+presentation and partnership proposal, with editable JSON and provenance.
+The [UEB Documents plugin source](plugins/ueb-documents/README.md) assembles the
+same identity, assets and renderer into one private ChatGPT package.
+
 ## Social media production guide
 
 See [Instructions de création des posts](GUIDE-POSTS-RESEAUX-SOCIAUX.md) (French)

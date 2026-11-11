@@ -5,3 +5,5 @@ node_modules
 /ueb-social-studio-plugin-*.zip
 /ueb-social-studio-marketplace-*.zip
 __pycache__/
+/ueb-documents-plugin-*.zip
+/document-kit/out/

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "consumers": [
+    { "id": "app-package", "version": "0.4.0", "identity": { "id": "ueb-apps-legacy", "version": "0.4.0" }, "source": "src/tokens.ts" },
+    { "id": "social-engine", "identity": { "id": "ueb-public-2026", "version": "1.0.0" }, "source": "social-kit/browser/poster-engine.js", "mode": "palette checked; existing engine unchanged" },
+    { "id": "social-plugin", "version": "0.1.1", "identity": { "id": "ueb-public-2026", "version": "1.0.0" }, "source": "social-kit/plugin.json", "mode": "existing package; browser-engine alignment is a separate task" },
+    { "id": "document-engine", "version": "0.1.0", "identity": { "id": "ueb-public-2026", "version": "1.0.0" }, "source": "document-kit/package.json" },
+    { "id": "document-plugin", "version": "0.1.0", "identity": { "id": "ueb-public-2026", "version": "1.0.0" }, "source": "plugins/ueb-documents/plugin.json" }
+  ]
+}

@@ -1,0 +1,5 @@
+PyMuPDF==1.26.7
+Pillow==12.0.0
+fonttools==4.61.1
+jsonschema==4.25.1
+PyYAML==6.0.3
