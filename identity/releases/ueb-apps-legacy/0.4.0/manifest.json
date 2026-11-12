@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "ueb-apps-legacy",
+  "version": "0.4.0",
+  "label": "Instantan\u00e9 des tokens applicatifs @ueb/brand v0.4.0",
+  "kind": "historical-token-snapshot",
+  "renderableDocuments": false,
+  "tokens": "tokens.json",
+  "source": {
+    "repository": "mfavier/ueb-brand",
+    "ref": "v0.4.0",
+    "path": "src/tokens.ts"
+  },
+  "files": {
+    "tokens.json": "78c224e5cfe2df83dbefe9e7e976b09fe86bef80a0aaa5f90feacca3bbed39d3"
+  }
+}

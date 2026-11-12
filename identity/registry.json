@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "active": {
+    "id": "ueb-public-2026",
+    "version": "1.0.0"
+  },
+  "identities": [
+    {
+      "id": "ueb-public-2026",
+      "version": "1.0.0",
+      "manifest": "releases/ueb-public-2026/1.0.0/manifest.json",
+      "manifestSha256": "40b524d52f835a0ecba415bb59e144013d3bd52426060c96d56072e62f4cdbf4",
+      "status": "active"
+    },
+    {
+      "id": "ueb-apps-legacy",
+      "version": "0.4.0",
+      "manifest": "releases/ueb-apps-legacy/0.4.0/manifest.json",
+      "manifestSha256": "d4e720ddb383c590863a15df9f6331b1d1cf6b5fc87bca8b24f279ed55d76af0",
+      "status": "historical"
+    }
+  ]
+}

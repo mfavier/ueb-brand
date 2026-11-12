@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "id": "sponsoring-demo",
+  "title": "Uccle Europe · Dossier de sponsoring · Modèle",
+  "language": "fr",
+  "createdAt": "2026-11-11T00:00:00Z",
+  "status": "draft",
+  "demo": true,
+  "reviewed": false,
+  "identity": {
+    "id": "ueb-public-2026",
+    "version": "1.0.0"
+  },
+  "template": {
+    "id": "sponsorship-dossier",
+    "version": "1.0.0"
+  },
+  "renderer": {
+    "id": "ueb-documents",
+    "version": "0.1.0"
+  },
+  "missing": [
+    "Chiffres du club à jour",
+    "Offres, montants et contreparties validés",
+    "Contact du partenariat",
+    "Crédit et autorisation de diffusion de la photo"
+  ],
+  "sources": [
+    {
+      "label": "Identité et présentation UEB",
+      "reference": "ueb-brand/GUIDE-POSTS-RESEAUX-SOCIAUX.md · 4db9c35",
+      "kind": "verified",
+      "asOf": "2026-11-11"
+    },
+    {
+      "label": "Photo du collectif",
+      "reference": "ueb-public/public/redesign-2026/collectif-2025-2026.jpg · archive 2025–2026",
+      "kind": "example",
+      "asOf": "2026-11-11"
+    }
+  ],
+  "pages": [
+    {
+      "kind": "cover",
+      "kicker": "Partenariats · Uccle Europe Basketball",
+      "title": "FAIRE\nÉQUIPE.",
+      "lead": "Soutenir le jeu. Renforcer le lien.\nConstruire l’avenir du club ensemble.",
+      "note": "DOSSIER DE SPONSORING · MODÈLE DE TRAVAIL"
+    },
+    {
+      "kind": "story",
+      "kicker": "Le club",
+      "title": "Du basket.\nEt bien plus autour.",
+      "lead": "Uccle Europe Basketball · Uccle, Bruxelles · Depuis 1946.",
+      "photo": {
+        "file": "assets/collectif-2025-2026.jpg",
+        "sha256": "57c4013088debb3e4beaa48ff838fc52a5d3da03d49a79ccb0b088aa6aeb1ac8",
+        "alt": "Photographie d’archive du collectif UEB, saison 2025–2026.",
+        "caption": "Collectif UEB · Archive 2025–2026 · Crédit et usage à confirmer avant diffusion."
+      },
+      "paragraphs": [
+        "Le jeu rassemble des joueurs, des entraîneurs, des familles et des bénévoles autour d’un même projet : progresser et faire équipe.",
+        "Ce document propose une trame de présentation. Les effectifs, les équipes, les résultats récents et les projets de la saison seront ajoutés à partir d’informations validées par le club."
+      ]
+    },
+    {
+      "kind": "cards",
+      "kicker": "Le sens du partenariat",
+      "title": "Un soutien qui\nprend sa place.",
+      "lead": "Trois angles pour construire une relation utile au projet sportif et à votre organisation.",
+      "cards": [
+        {
+          "title": "Le jeu",
+          "text": "Identifier un besoin concret : formation, matériel ou accompagnement d’un projet. Définir ensemble ce que le soutien rend possible."
+        },
+        {
+          "title": "Le lien",
+          "text": "Créer des occasions de rencontre autour du club. Préciser les publics, les rendez-vous et la manière de valoriser la contribution du partenaire."
+        },
+        {
+          "title": "L’avenir",
+          "text": "Inscrire la relation dans une durée choisie. Fixer des objectifs simples et partager un bilan des actions effectivement réalisées."
+        }
+      ],
+      "quote": "Un partenariat se construit\nautour d’un projet commun."
+    },
+    {
+      "kind": "offers",
+      "kicker": "Les possibilités",
+      "title": "Une formule\nà construire ensemble.",
+      "lead": "Ces pistes illustrent la présentation. Elles ne constituent pas une offre commerciale approuvée.",
+      "cards": [
+        {
+          "label": "PISTE 01 · À VALIDER",
+          "title": "Soutenir un projet",
+          "text": "Un besoin identifié et un engagement ciblé.",
+          "items": [
+            "Projet, budget et calendrier à préciser.",
+            "Contreparties et montant à valider."
+          ]
+        },
+        {
+          "label": "PISTE 02 · À VALIDER",
+          "title": "Accompagner le club",
+          "text": "Une relation suivie sur une période définie.",
+          "items": [
+            "Périmètre de soutien à préciser.",
+            "Visibilité et suivi à convenir."
+          ]
+        },
+        {
+          "label": "PISTE 03 · À VALIDER",
+          "title": "Partager un rendez-vous",
+          "text": "Une contribution liée à un événement du club.",
+          "items": [
+            "Événement et modalités à préciser.",
+            "Aucun engagement de diffusion présumé."
+          ]
+        }
+      ],
+      "note": "Aucun tarif, audience ou avantage fiscal n’est établi par ce modèle."
+    },
+    {
+      "kind": "process",
+      "kicker": "La suite",
+      "title": "De la rencontre\nà l’action.",
+      "lead": "Un cadre simple pour définir les engagements de chacun.",
+      "cards": [
+        {
+          "title": "Échanger",
+          "text": "Comprendre vos objectifs et les besoins du club. Choisir un interlocuteur et clarifier les attentes."
+        },
+        {
+          "title": "Formaliser",
+          "text": "Décrire le projet, le montant ou l’apport, la durée et les contreparties. Faire valider la proposition avant tout engagement."
+        },
+        {
+          "title": "Suivre",
+          "text": "Prévoir les étapes de mise en œuvre et le bilan. Ne présenter comme réalisés que les engagements effectivement tenus."
+        }
+      ],
+      "note": "La convention, les logos autorisés et le calendrier accompagnent la proposition finale."
+    },
+    {
+      "kind": "contact",
+      "kicker": "Parlons partenariat",
+      "title": "ÉCHANGEONS.\nFAISONS ÉQUIPE.",
+      "lead": "Une question, une idée, un projet à partager ?",
+      "paragraphs": [
+        "[CONTACT PARTENARIATS À CONFIRMER]",
+        "[EMAIL ET TÉLÉPHONE À COMPLÉTER]"
+      ],
+      "links": [
+        {
+          "label": "www.uebasket.be",
+          "url": "https://www.uebasket.be"
+        }
+      ],
+      "note": "Modèle de présentation. Contacts et conditions à compléter avant diffusion."
+    }
+  ]
+}

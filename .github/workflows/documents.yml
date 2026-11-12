@@ -1,0 +1,41 @@
+name: Versioned identity and documents
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+jobs:
+  documents:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: document-kit/package-lock.json
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: npm ci --prefix document-kit
+      - run: npm test --prefix document-kit
+      - name: Committed renderer matches its sources
+        run: git diff --exit-code -- document-kit/dist
+      - run: node scripts/check-identity.mjs
+      - name: Published identity releases stay immutable
+        if: github.event_name == 'pull_request'
+        run: node scripts/guard-identity.mjs --base origin/main
+      - run: python -m pip install -r document-kit/test/requirements-qa.txt
+      - run: python scripts/prepare_identity_fonts.py --check
+      - name: Render and inspect the three documents
+        run: |
+          for name in sponsoring-demo presentation-club-demo partenariat-demo; do
+            node document-kit/scripts/render.mjs --input "examples/documents/$name.json" --output "/tmp/$name.pdf"
+            python document-kit/scripts/verify_pdf.py "/tmp/$name.pdf" "examples/documents/$name.json"
+          done
+      - name: Build and inspect the plugin
+        run: |
+          python scripts/package_documents.py --output /tmp/ueb-documents-plugin-0.1.0.zip
+          python document-kit/test/test_plugin_archive.py /tmp/ueb-documents-plugin-0.1.0.zip

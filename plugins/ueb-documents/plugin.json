@@ -1,0 +1,28 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ueb-documents",
+  "version": "0.1.0",
+  "description": "Préparer les documents PDF Uccle Europe avec une identité versionnée, des modèles contrôlés et des sources éditables.",
+  "author": { "name": "Uccle Europe Basketball" },
+  "homepage": "https://uebasket.be/",
+  "repository": "https://github.com/mfavier/ueb-brand",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "UEB — Documents",
+        "shortDescription": "Les documents d’Uccle Europe.",
+        "longDescription": "Créer une présentation du club, un dossier sponsoring ou une proposition de partenariat en PDF. Le kit embarque la charte publique 2026 versionnée, les actifs officiels, trois modèles, des exemples et un moteur PDF autonome pour Node 22+. Conserve la source et les versions de fabrication. Les données réelles et les engagements sont fournis et relus pour chaque document.",
+        "developerName": "Uccle Europe Basketball",
+        "category": "Productivity",
+        "brandColor": "#3448A1",
+        "logo": "./assets/ueb-plugin-icon.png",
+        "composerIcon": "./assets/ueb-plugin-icon.png",
+        "defaultPrompt": [
+          "Prépare un dossier de sponsoring UEB avec les informations que je joins.",
+          "Crée une présentation du club en gardant la version de charte indiquée.",
+          "Adapte le modèle de partenariat à cette entreprise sans inventer de contreparties."
+        ]
+      }
+    }
+  }
+}
